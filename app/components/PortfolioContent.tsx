@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Cog } from "lucide-react";
+import Image from "next/image";
 import styles from "./PortfolioContent.module.scss";
+import LanguageToggle from "./LanguageToggle";
+import ThemeToggle from "./ThemeToggle";
+import HeroParticles from "./HeroParticles";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
@@ -20,27 +25,254 @@ const stagger = {
 export default function PortfolioContent() {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState<string | null>(null);
+
+  const navItems = useMemo(
+    () => [
+      { href: "#profile", label: t("nav.about") },
+      { href: "#experience", label: t("nav.experience") },
+      { href: "#education", label: t("nav.education") },
+      { href: "#skills", label: t("nav.skills") },
+      { href: "#contact", label: t("nav.contact") },
+    ],
+    [t]
+  );
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const nextScrolled = window.scrollY > 40;
+          setScrolled(nextScrolled);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const ids = ["hero", "profile", "experience", "education", "skills", "contact"];
+
+    const computeActive = () => {
+      const scrollY = window.scrollY;
+      const viewportH = window.innerHeight;
+      const center = scrollY + viewportH / 2;
+
+      let bestId: string | null = null;
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + scrollY;
+        const middle = top + rect.height / 2;
+        const distance = Math.abs(middle - center);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestId = id;
+        }
+      });
+
+      if (!bestId || bestId === "hero") {
+        setActiveHash((current) => (current === null ? current : null));
+      } else {
+        setActiveHash((current) => (current === `#${bestId}` ? current : `#${bestId}`));
+      }
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          computeActive();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    computeActive();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", computeActive);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", computeActive);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!settingsOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSettingsOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [settingsOpen]);
+
+  const onNavClick = () => setMenuOpen(false);
+
   return (
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ""}`}>
-        <a href="#" className={styles.logo}>MR</a>
-        <div className={styles.links}>
-          <a href="#profile">{t("nav.about")}</a>
-          <a href="#experience">{t("nav.experience")}</a>
-          <a href="#education">{t("nav.education")}</a>
-          <a href="#skills">{t("nav.skills")}</a>
-          <a href="#contact">{t("nav.contact")}</a>
+        <a
+          href="#hero"
+          className={styles.logo}
+          onClick={(event) => {
+            event.preventDefault();
+            onNavClick();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          aria-label="Home"
+        >
+          <span className={styles.logoMark}>MR</span>
+        </a>
+        <div className={styles.links} aria-label="Primary">
+          {navItems.map((item) => {
+            const isActive = activeHash === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onNavClick();
+                  const target = document.querySelector<HTMLElement>(item.href);
+                  if (!target) return;
+                  const navOffset = 72;
+                  const rect = target.getBoundingClientRect();
+                  const absoluteTop = rect.top + window.scrollY;
+                  window.scrollTo({
+                    top: absoluteTop - navOffset,
+                    behavior: "smooth",
+                  });
+                }}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {isActive && activeHash && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className={styles.linksPill}
+                    transition={{
+                      type: "spring",
+                      stiffness: 420,
+                      damping: 32,
+                      mass: 0.3,
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className={styles.linkLabel}>{item.label}</span>
+              </a>
+            );
+          })}
+          <button
+            type="button"
+            className={styles.settingsButton}
+            aria-label="Settings"
+            aria-expanded={settingsOpen}
+            aria-controls="settings-panel"
+            onClick={() => setSettingsOpen((v) => !v)}
+          >
+            <Cog size={18} />
+          </button>
         </div>
+
+        <button
+          type="button"
+          className={styles.menuButton}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span className={styles.menuIcon} aria-hidden="true" data-open={menuOpen} />
+        </button>
       </nav>
 
+      <AnimatePresence>
+        {settingsOpen && (
+          <motion.div
+            className={styles.settingsOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSettingsOpen(false)}
+          >
+            <motion.aside
+              id="settings-panel"
+              className={`${styles.settingsPanel} ${scrolled ? styles.settingsPanelScrolled : ""}`}
+              role="dialog"
+              aria-modal="true"
+              initial={{ opacity: 0, clipPath: "inset(0 0 100% 0 round 0 0 0 20px)", scale: 0.98 }}
+              animate={{ opacity: 1, clipPath: "inset(0 0 0% 0 round 0 0 0 20px)", scale: 1 }}
+              exit={{ opacity: 0, clipPath: "inset(0 0 100% 0 round 0 0 0 20px)", scale: 0.98 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <LanguageToggle />
+              <ThemeToggle />
+            </motion.aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {menuOpen && (
+        <motion.div
+          className={styles.menuOverlay}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setMenuOpen(false)}
+        >
+          <motion.div
+            id="mobile-menu"
+            className={styles.menuPanel}
+            role="dialog"
+            aria-modal="true"
+            initial={{ y: -8, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.18 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <a href="#profile" onClick={onNavClick}>
+              {t("nav.about")}
+            </a>
+            <a href="#experience" onClick={onNavClick}>
+              {t("nav.experience")}
+            </a>
+            <a href="#education" onClick={onNavClick}>
+              {t("nav.education")}
+            </a>
+            <a href="#skills" onClick={onNavClick}>
+              {t("nav.skills")}
+            </a>
+            <a href="#contact" onClick={onNavClick}>
+              {t("nav.contact")}
+            </a>
+          </motion.div>
+        </motion.div>
+      )}
+
       <section id="hero" className={`${styles.section} ${styles.hero}`}>
+        <HeroParticles />
         <div className={styles.heroInner}>
           <motion.div
             className={styles.heroText}
@@ -55,15 +287,24 @@ export default function PortfolioContent() {
             <motion.p className={styles.role} variants={fadeInUp}>
               {t("hero.role")}
             </motion.p>
-            <motion.a
-              href="#profile"
-              className={styles.cta}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {t("hero.cta")}
-            </motion.a>
+            <motion.div className={styles.heroCtas} variants={fadeInUp}>
+              <motion.a
+                href="#profile"
+                className={styles.ctaPrimary}
+                whileHover={{}}
+                whileTap={{}}
+              >
+                {t("hero.cta")}
+              </motion.a>
+              <motion.a
+                href="#contact"
+                className={styles.ctaSecondary}
+                whileHover={{}}
+                whileTap={{}}
+              >
+                {t("nav.contact")}
+              </motion.a>
+            </motion.div>
           </motion.div>
           <motion.div
             className={styles.profileImageWrap}
@@ -71,12 +312,20 @@ export default function PortfolioContent() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div
-              className={styles.profileImage}
-              style={{ backgroundImage: "url(/profile.jpg)" }}
-              role="img"
-              aria-label={t("hero.name")}
-            />
+            <motion.div
+              className={styles.avatar}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+            >
+              <Image
+                src="/avatar.png"
+                alt={t("hero.name")}
+                fill
+                sizes="(max-width: 768px) 240px, 320px"
+                className={styles.avatarImage}
+                priority
+              />
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -90,9 +339,9 @@ export default function PortfolioContent() {
           variants={stagger}
         >
           <motion.h2 variants={fadeInUp}>{t("profile.title")}</motion.h2>
-          <motion.p className={styles.profileText} variants={fadeInUp}>
-            {t("profile.text")}
-          </motion.p>
+          <motion.div className={styles.card} variants={fadeInUp}>
+            <p className={styles.profileText}>{t("profile.text")}</p>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -209,28 +458,41 @@ export default function PortfolioContent() {
         >
           <motion.h2 variants={fadeInUp}>{t("contact.title")}</motion.h2>
           <div className={styles.contactGrid}>
-            <motion.a href="tel:+541138899722" variants={fadeInUp}>
-              {t("contact.phone")}
+            <motion.a className={styles.contactCard} href="tel:+541138899722" variants={fadeInUp}>
+              <span className={styles.contactLabel}>Phone</span>
+              <span className={styles.contactValue}>{t("contact.phone")}</span>
             </motion.a>
-            <motion.a href="mailto:manuelrodriguezgarcia.wd@gmail.com" variants={fadeInUp}>
-              {t("contact.email")}
-            </motion.a>
-            <motion.span variants={fadeInUp}>{t("contact.location")}</motion.span>
             <motion.a
+              className={styles.contactCard}
+              href="mailto:manuelrodriguezgarcia.wd@gmail.com"
+              variants={fadeInUp}
+            >
+              <span className={styles.contactLabel}>Email</span>
+              <span className={styles.contactValue}>{t("contact.email")}</span>
+            </motion.a>
+            <motion.div className={styles.contactCard} variants={fadeInUp}>
+              <span className={styles.contactLabel}>Location</span>
+              <span className={styles.contactValue}>{t("contact.location")}</span>
+            </motion.div>
+            <motion.a
+              className={styles.contactCard}
               href="https://www.linkedin.com/in/manuel-agustin-rodriguez-garcia"
               target="_blank"
               rel="noopener noreferrer"
               variants={fadeInUp}
             >
-              {t("contact.linkedin")}
+              <span className={styles.contactLabel}>{t("contact.linkedin")}</span>
+              <span className={styles.contactValue}>manuel-agustin-rodriguez-garcia</span>
             </motion.a>
             <motion.a
+              className={styles.contactCard}
               href="https://github.com/manuelAgustinRodriguezGarcia"
               target="_blank"
               rel="noopener noreferrer"
               variants={fadeInUp}
             >
-              {t("contact.github")}
+              <span className={styles.contactLabel}>{t("contact.github")}</span>
+              <span className={styles.contactValue}>manuelAgustinRodriguezGarcia</span>
             </motion.a>
           </div>
         </motion.div>

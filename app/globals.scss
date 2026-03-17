@@ -1,14 +1,24 @@
+@use "./styles/variables" as *;
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --purple-rain: #d70dff;
+  --bg: #{$color-bg};
+  --text: #{$color-text};
+  --text-muted: #{$color-text-muted};
+  --border: #{$color-border};
+  --surface: #{$color-surface};
+  --accent: #{$color-accent};
+  --accent-2: #{$color-accent-2};
+  --purple-rain: #{$purple_rain};
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html[data-theme="light"] {
+  --bg: #f7f7fb;
+  --text: rgba(10, 10, 14, 0.92);
+  --text-muted: rgba(10, 10, 14, 0.62);
+  --border: rgba(10, 10, 14, 0.14);
+  --surface: rgba(10, 10, 14, 0.04);
+  --accent: #6d28d9;
+  --accent-2: #0891b2;
 }
 
 html {
@@ -22,11 +32,12 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-family: $font-sans;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
 }
 
 * {
@@ -40,8 +51,19 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+html {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+::selection {
+  background: rgba(124, 58, 237, 0.35);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.85);
+  outline-offset: 2px;
 }

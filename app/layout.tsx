@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.scss";
 import I18nProvider from "./components/I18nProvider";
-import LanguageToggle from "./components/LanguageToggle";
 
 export const metadata: Metadata = {
   title: "Manuel Rodriguez Garcia | Frontend Developer",
@@ -17,7 +16,6 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body>
         <I18nProvider>
-          <LanguageToggle />
           {children}
         </I18nProvider>
       </body>
