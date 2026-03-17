@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "education": "Estudios",
+    "skills": "Habilidades",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "name": "Manuel Rodriguez Garcia",
+    "role": "Desarrollador Frontend",
+    "cta": "Conocer más"
+  },
+  "profile": {
+    "title": "Perfil",
+    "text": "Desarrollador frontend orientado a crear interfaces modernas y accesibles. Me enfoco en la calidad del código, el detalle visual y el trabajo en equipo, integrando de forma inteligente herramientas de IA para optimizar procesos y resultados."
+  },
+  "experience": {
+    "title": "Experiencia",
+    "items": [
+      {
+        "role": "Desarrollador Frontend",
+        "company": "Epirco Group",
+        "period": "Sep 2025 - Actualidad",
+        "points": [
+          "Desarrollo de aplicaciones web con React JS",
+          "Trabajo en conjunto con desarrolladores backend y diseñadores UX",
+          "Trabajo remoto 100% online",
+          "Participación en el diseño UX y decisiones sobre los proyectos",
+          "Edición de prototipados en Figma"
+        ]
+      },
+      {
+        "role": "Desarrollador Frontend Freelance",
+        "company": "",
+        "period": "Abr 2023 - Ago 2025",
+        "points": [
+          "Desarrollo de interfaces responsivas con React, TypeScript y JavaScript",
+          "Integración de APIs REST",
+          "Uso de Git y GitHub para control de versiones",
+          "Aplicación de principios SOLID en proyectos personales",
+          "Creación de sitios con WordPress, Elementor y Shopify",
+          "Colaboración con herramientas de IA (Claude, ChatGPT, Cursor, BlackBox)"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Estudios",
+    "items": [
+      {
+        "name": "Tecnicatura en Desarrollo Web",
+        "school": "Escuela Da Vinci",
+        "period": "2025 - Actualidad"
+      },
+      {
+        "name": "Curso de Front End Developer",
+        "school": "Coderhouse",
+        "period": "2023-2024"
+      }
+    ]
+  },
+  "languages": {
+    "title": "Idiomas",
+    "spanish": "Español — Nativo",
+    "english": "Inglés — Avanzado C2 (MCER)"
+  },
+  "skills": {
+    "title": "Habilidades técnicas",
+    "frontend": "Frontend",
+    "frontendList": "HTML, CSS, SCSS, Tailwind, JavaScript, TypeScript, React, Next.js",
+    "cms": "CMS y herramientas",
+    "cmsList": "WordPress, Elementor, Shopify",
+    "ui": "UI y diseño",
+    "uiList": "Photoshop, Illustrator, Bootstrap, Figma",
+    "backend": "Backend y DB",
+    "backendList": "PHP, SQL, Express",
+    "versionControl": "Control de versiones",
+    "versionControlList": "GitHub"
+  },
+  "contact": {
+    "title": "Contacto",
+    "phone": "+54 11 3889 9722",
+    "email": "manuelrodriguezgarcia.wd@gmail.com",
+    "location": "Barracas, CABA — Argentina",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  }
+}

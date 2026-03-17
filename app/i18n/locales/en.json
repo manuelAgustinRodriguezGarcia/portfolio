@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Manuel Rodriguez Garcia",
+    "role": "Frontend Developer",
+    "cta": "Learn more"
+  },
+  "profile": {
+    "title": "Profile",
+    "text": "Frontend developer focused on creating modern and accessible interfaces. I emphasize code quality, visual detail, and teamwork, integrating AI tools intelligently to optimize processes and results."
+  },
+  "experience": {
+    "title": "Experience",
+    "items": [
+      {
+        "role": "Frontend Developer",
+        "company": "Epirco Group",
+        "period": "Sep 2025 - Present",
+        "points": [
+          "Web application development using React JS",
+          "Collaboration with backend developers and UX designers",
+          "Fully remote work (100% online)",
+          "Participation in UX design and project decision-making",
+          "Editing and refining prototypes in Figma"
+        ]
+      },
+      {
+        "role": "Freelance Frontend Developer",
+        "company": "",
+        "period": "Apr 2023 - Aug 2025",
+        "points": [
+          "Development of responsive interfaces using React, TypeScript, and JavaScript",
+          "REST API integration",
+          "Version control with Git and GitHub",
+          "Application of SOLID principles in personal projects",
+          "Website creation with WordPress, Elementor, and Shopify",
+          "Collaboration with AI tools (Claude, ChatGPT, Cursor, BlackBox)"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Education",
+    "items": [
+      {
+        "name": "Web Development Associate Degree",
+        "school": "Escuela Da Vinci",
+        "period": "2025 - Present"
+      },
+      {
+        "name": "Front End Developer Course",
+        "school": "Coderhouse",
+        "period": "2023-2024"
+      }
+    ]
+  },
+  "languages": {
+    "title": "Languages",
+    "spanish": "Spanish — Native",
+    "english": "English — Advanced C2 (CEFR)"
+  },
+  "skills": {
+    "title": "Technical skills",
+    "frontend": "Frontend",
+    "frontendList": "HTML, CSS, SCSS, Tailwind, JavaScript, TypeScript, React, Next.js",
+    "cms": "CMS & tools",
+    "cmsList": "WordPress, Elementor, Shopify",
+    "ui": "UI & design",
+    "uiList": "Photoshop, Illustrator, Bootstrap, Figma",
+    "backend": "Backend & DB",
+    "backendList": "PHP, SQL, Express",
+    "versionControl": "Version control",
+    "versionControlList": "GitHub"
+  },
+  "contact": {
+    "title": "Contact",
+    "phone": "+54 11 3889 9722",
+    "email": "manuelrodriguezgarcia.wd@gmail.com",
+    "location": "Barracas, CABA — Argentina",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  }
+}
