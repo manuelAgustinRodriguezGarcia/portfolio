@@ -14,7 +14,13 @@
   },
   "profile": {
     "title": "Perfil",
-    "text": "Desarrollador frontend orientado a crear interfaces modernas y accesibles. Me enfoco en la calidad del código, el detalle visual y el trabajo en equipo, integrando de forma inteligente herramientas de IA para optimizar procesos y resultados."
+    "headline": "<prim>Una web que funciona no basta.</prim> <grad>Que se sienta bien, sí.</grad>",
+    "line1": "Ayudo a <accent>empresas y emprendedores</accent> a ganar confianza online y convertir visitas en oportunidades con interfaces claras, rápidas y con atención obsesiva al detalle.",
+    "line2": "Una web que te representa bien cambia cómo te perciben: <accent>menos dudas, más consultas</accent> y más tiempo para lo que importa de verdad.",
+    "line3": "Diseño <accent>sin fricciones</accent>, <accent>sin copy genérico</accent> y <accent>sin sorpresas</accent> que confundan al usuario. No es solo cumplir: es que tu marca se sienta segura y clara.",
+    "line4": "Me apasiona el <accent>diseño con criterio</accent> y la <accent>estética con intención</accent> para que tus objetivos de negocio se vean en cada pantalla y superes el estándar de bueno, pero igual.",
+    "line5": "Una página puede ser <accent>funcional</accent> y aún así sentirse fría. Yo busco que la experiencia sea <accent>memorable</accent>: la usabilidad que acompaña, pero no reemplaza, el acierto visual.",
+    "line6": "Me reconocen por la <accent>atención al detalle</accent> al crear soluciones web: código limpio, interacciones fluidas y un resultado que no se olvida."
   },
   "experience": {
     "title": "Experiencia",
@@ -81,6 +87,11 @@
   },
   "contact": {
     "title": "Contacto",
+    "labelPhone": "Teléfono",
+    "labelEmail": "Correo",
+    "labelLocation": "Ubicación",
+    "labelLinkedin": "LinkedIn",
+    "labelGithub": "GitHub",
     "phone": "+54 11 3889 9722",
     "email": "manuelrodriguezgarcia.wd@gmail.com",
     "location": "Barracas, CABA — Argentina",

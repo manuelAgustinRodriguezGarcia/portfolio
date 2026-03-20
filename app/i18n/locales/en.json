@@ -14,7 +14,13 @@
   },
   "profile": {
     "title": "Profile",
-    "text": "Frontend developer focused on creating modern and accessible interfaces. I emphasize code quality, visual detail, and teamwork, integrating AI tools intelligently to optimize processes and results."
+    "headline": "<prim>A working site is not enough.</prim> <grad>One that feels right, is.</grad>",
+    "line1": "I help <accent>companies and founders</accent> earn trust online and turn visits into opportunities with clear, fast interfaces and obsessive attention to detail.",
+    "line2": "A site that represents you well changes how people see you: <accent>fewer doubts, more inquiries</accent>, and more time for what truly matters.",
+    "line3": "I design <accent>without friction</accent>, <accent>without generic copy</accent>, and <accent>without confusing surprises</accent>. It is not just shipping: it is your brand feeling clear and confident.",
+    "line4": "I am passionate about <accent>intentional design</accent> and <accent>aesthetic with purpose</accent> so your business goals show on every screen and you move beyond good enough.",
+    "line5": "A page can be <accent>functional</accent> and still feel cold. I aim for <accent>memorable</accent> experiences: usability that supports, not replaces, visual craft.",
+    "line6": "I am known for <accent>attention to detail</accent> in web solutions: clean code, smooth interactions, and a result people remember."
   },
   "experience": {
     "title": "Experience",
@@ -81,6 +87,11 @@
   },
   "contact": {
     "title": "Contact",
+    "labelPhone": "Phone",
+    "labelEmail": "Email",
+    "labelLocation": "Location",
+    "labelLinkedin": "LinkedIn",
+    "labelGithub": "GitHub",
     "phone": "+54 11 3889 9722",
     "email": "manuelrodriguezgarcia.wd@gmail.com",
     "location": "Barracas, CABA — Argentina",

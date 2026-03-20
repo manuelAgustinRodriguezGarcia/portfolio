@@ -469,6 +469,131 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   }
 }
 
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.sectionHeadingIcon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    145deg,
+    rgba(124, 58, 237, 0.35) 0%,
+    rgba(147, 51, 234, 0.12) 55%,
+    rgba(34, 211, 238, 0.08) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(216, 180, 254, 0.98);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.profileHeadGroup {
+  width: 100%;
+}
+
+.profileHeadline {
+  font-size: clamp(1.45rem, 3.2vw, 2.35rem);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.22;
+  margin: 0 0 2.35rem;
+  max-width: 48rem;
+}
+
+.profileHeadlinePrim {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.profileHeadlineGrad {
+  background: linear-gradient(
+    135deg,
+    rgba(216, 180, 254, 0.98) 0%,
+    rgba(167, 139, 250, 0.98) 42%,
+    rgba(124, 58, 237, 0.92) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.profileAccent {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.98) 0%,
+    rgba(147, 51, 234, 0.98) 55%,
+    rgba(216, 180, 254, 0.95) 140%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+.profileBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 52rem;
+}
+
+.profileBlock {
+  position: relative;
+  padding: 1.2rem 1.35rem 1.2rem 1.4rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: $radius-lg;
+  border-left: 3px solid rgba(147, 51, 234, 0.75);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      120% 80% at 100% 0%,
+      rgba(124, 58, 237, 0.12) 0%,
+      transparent 55%
+    );
+    pointer-events: none;
+  }
+}
+
+.profileBlockIndex {
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.14);
+  text-transform: uppercase;
+  font-family: $font-mono;
+  z-index: 1;
+}
+
+.profileBlockText {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1rem, 1.9vw, 1.08rem);
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  padding-right: 2.5rem;
+}
+
 .hero {
   min-height: 100vh;
   padding-top: 7rem;
@@ -694,13 +819,6 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   padding: 1.4rem 1.4rem;
 }
 
-.profileText {
-  font-size: 1.125rem;
-  line-height: 1.75;
-  color: $text-muted;
-  max-width: 42rem;
-}
-
 .timeline {
   display: flex;
   flex-direction: column;
@@ -789,15 +907,18 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   }
 }
 
+.languagesHeading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $text;
+  margin-bottom: 0.5rem;
+}
+
 .languages {
   padding-top: 0.75rem;
-
-  h3 {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: $text;
-    margin-bottom: 0.5rem;
-  }
 
   p {
     font-size: 0.9375rem;
@@ -824,6 +945,9 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   }
 
   h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     font-size: 0.8125rem;
     font-weight: 600;
     color: rgba(34, 211, 238, 0.92);
@@ -839,15 +963,21 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   }
 }
 
+.skillGroupIcon {
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
 .contactGrid {
   display: grid;
   gap: 0.9rem;
 }
 
 .contactCard {
-  display: grid;
-  gap: 0.35rem;
-  padding: 1rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: $radius-lg;
@@ -860,6 +990,28 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.16);
   }
+}
+
+.contactCardIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(124, 58, 237, 0.28) 0%,
+    rgba(147, 51, 234, 0.1) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(216, 180, 254, 0.96);
+}
+
+.contactCardBody {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
 }
 
 .contactLabel {

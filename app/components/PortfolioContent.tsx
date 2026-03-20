@@ -1,9 +1,29 @@
 "use client";
 
 import { useMemo, useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Cog, Menu, X } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  ChevronDown,
+  Code2,
+  Cog,
+  GitBranch,
+  Github,
+  GraduationCap,
+  Languages,
+  Layers,
+  Linkedin,
+  Mail,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Palette,
+  Phone,
+  Server,
+  UserRound,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import styles from "./PortfolioContent.module.scss";
 import LanguageToggle from "./LanguageToggle";
@@ -47,6 +67,33 @@ const menuItemLadder = {
   },
 };
 
+const profileBlocksParent = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const profileBlockFade = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.48, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+};
+
+const PROFILE_LINE_KEYS = [1, 2, 3, 4, 5, 6] as const;
+
+const SKILL_ROWS = [
+  { titleKey: "skills.frontend", listKey: "skills.frontendList", Icon: Code2 },
+  { titleKey: "skills.ui", listKey: "skills.uiList", Icon: Palette },
+  { titleKey: "skills.backend", listKey: "skills.backendList", Icon: Server },
+  { titleKey: "skills.versionControl", listKey: "skills.versionControlList", Icon: GitBranch },
+] as const;
+
 export default function PortfolioContent() {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
@@ -61,19 +108,23 @@ export default function PortfolioContent() {
   const lastActiveUpdateRef = useRef(0);
 
   const heroFullName = t("hero.name");
-  const heroNameOptions = useMemo(() => ["Manuel", "Manuel Rodriguez"], []);
-  const heroNameSizerText = useMemo(
+  const heroNameOptions = useMemo(
     () =>
-      heroNameOptions.reduce((max, current) =>
-        current.length > max.length ? current : max
-      , ""),
-    [heroNameOptions]
+      isNavNarrow
+        ? ["Manuel", "Manuel Rodriguez"]
+        : ["Manuel", "Manuel Rodriguez", "Manuel Rodriguez Garcia"],
+    [isNavNarrow]
   );
+  const heroNameSizerText = useMemo(() => "Manuel Rodriguez Garcia", []);
   const [heroOptionIndex, setHeroOptionIndex] = useState(0);
   const [heroCharCount, setHeroCharCount] = useState(0);
   const [heroIsViolet, setHeroIsViolet] = useState(false);
+  const heroSafeIndex = Math.min(
+    heroOptionIndex,
+    Math.max(0, heroNameOptions.length - 1)
+  );
   const heroTypedText =
-    heroNameOptions[heroOptionIndex]?.slice(0, heroCharCount) ?? "";
+    heroNameOptions[heroSafeIndex]?.slice(0, heroCharCount) ?? "";
 
   const navItems = useMemo(
     () => [
@@ -250,7 +301,7 @@ export default function PortfolioContent() {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const typingMs = 90;
-    const holdingMs = 3000;
+    const holdingMs = 4000;
     const deletingMs = 125;
     const betweenMs = 180;
 
@@ -687,9 +738,43 @@ export default function PortfolioContent() {
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          <motion.h2 variants={fadeInUp}>{t("profile.title")}</motion.h2>
-          <motion.div className={styles.card} variants={fadeInUp}>
-            <p className={styles.profileText}>{t("profile.text")}</p>
+          <motion.div className={styles.profileHeadGroup} variants={fadeInUp}>
+            <div className={styles.sectionHeading}>
+              <span className={styles.sectionHeadingIcon} aria-hidden>
+                <UserRound size={26} strokeWidth={1.75} />
+              </span>
+              <h2>{t("profile.title")}</h2>
+            </div>
+            <p className={styles.profileHeadline}>
+              <Trans
+                i18nKey="profile.headline"
+                components={{
+                  prim: <span className={styles.profileHeadlinePrim} />,
+                  grad: <span className={styles.profileHeadlineGrad} />,
+                }}
+              />
+            </p>
+          </motion.div>
+          <motion.div className={styles.profileBlocks} variants={profileBlocksParent}>
+            {PROFILE_LINE_KEYS.map((n) => (
+              <motion.article
+                key={n}
+                className={styles.profileBlock}
+                variants={profileBlockFade}
+              >
+                <span className={styles.profileBlockIndex} aria-hidden>
+                  {String(n).padStart(2, "0")}
+                </span>
+                <p className={styles.profileBlockText}>
+                  <Trans
+                    i18nKey={`profile.line${n}`}
+                    components={{
+                      accent: <span className={styles.profileAccent} />,
+                    }}
+                  />
+                </p>
+              </motion.article>
+            ))}
           </motion.div>
         </motion.div>
       </section>
@@ -702,7 +787,12 @@ export default function PortfolioContent() {
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          <motion.h2 variants={fadeInUp}>{t("experience.title")}</motion.h2>
+          <motion.div className={styles.sectionHeading} variants={fadeInUp}>
+            <span className={styles.sectionHeadingIcon} aria-hidden>
+              <BriefcaseBusiness size={26} strokeWidth={1.75} />
+            </span>
+            <h2>{t("experience.title")}</h2>
+          </motion.div>
           <div className={styles.timeline}>
             {(
               t("experience.items", { returnObjects: true }) as {
@@ -740,7 +830,12 @@ export default function PortfolioContent() {
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          <motion.h2 variants={fadeInUp}>{t("education.title")}</motion.h2>
+          <motion.div className={styles.sectionHeading} variants={fadeInUp}>
+            <span className={styles.sectionHeadingIcon} aria-hidden>
+              <GraduationCap size={26} strokeWidth={1.75} />
+            </span>
+            <h2>{t("education.title")}</h2>
+          </motion.div>
           <div className={styles.educationGrid}>
             {(
               t("education.items", { returnObjects: true }) as {
@@ -757,7 +852,10 @@ export default function PortfolioContent() {
             ))}
           </div>
           <motion.div className={styles.languages} variants={fadeInUp}>
-            <h3>{t("languages.title")}</h3>
+            <h3 className={styles.languagesHeading}>
+              <Languages size={18} strokeWidth={2} aria-hidden />
+              {t("languages.title")}
+            </h3>
             <p>{t("languages.spanish")} · {t("languages.english")}</p>
           </motion.div>
         </motion.div>
@@ -771,24 +869,22 @@ export default function PortfolioContent() {
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          <motion.h2 variants={fadeInUp}>{t("skills.title")}</motion.h2>
+          <motion.div className={styles.sectionHeading} variants={fadeInUp}>
+            <span className={styles.sectionHeadingIcon} aria-hidden>
+              <Layers size={26} strokeWidth={1.75} />
+            </span>
+            <h2>{t("skills.title")}</h2>
+          </motion.div>
           <div className={styles.skillsGrid}>
-            <motion.div className={styles.skillGroup} variants={fadeInUp}>
-              <h4>{t("skills.frontend")}</h4>
-              <p>{t("skills.frontendList")}</p>
-            </motion.div>
-            <motion.div className={styles.skillGroup} variants={fadeInUp}>
-              <h4>{t("skills.ui")}</h4>
-              <p>{t("skills.uiList")}</p>
-            </motion.div>
-            <motion.div className={styles.skillGroup} variants={fadeInUp}>
-              <h4>{t("skills.backend")}</h4>
-              <p>{t("skills.backendList")}</p>
-            </motion.div>
-            <motion.div className={styles.skillGroup} variants={fadeInUp}>
-              <h4>{t("skills.versionControl")}</h4>
-              <p>{t("skills.versionControlList")}</p>
-            </motion.div>
+            {SKILL_ROWS.map(({ titleKey, listKey, Icon }) => (
+              <motion.div key={titleKey} className={styles.skillGroup} variants={fadeInUp}>
+                <h4>
+                  <Icon size={16} strokeWidth={2} aria-hidden className={styles.skillGroupIcon} />
+                  {t(titleKey)}
+                </h4>
+                <p>{t(listKey)}</p>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </section>
@@ -801,23 +897,43 @@ export default function PortfolioContent() {
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          <motion.h2 variants={fadeInUp}>{t("contact.title")}</motion.h2>
+          <motion.div className={styles.sectionHeading} variants={fadeInUp}>
+            <span className={styles.sectionHeadingIcon} aria-hidden>
+              <MessageCircle size={26} strokeWidth={1.75} />
+            </span>
+            <h2>{t("contact.title")}</h2>
+          </motion.div>
           <div className={styles.contactGrid}>
             <motion.a className={styles.contactCard} href="tel:+541138899722" variants={fadeInUp}>
-              <span className={styles.contactLabel}>Phone</span>
-              <span className={styles.contactValue}>{t("contact.phone")}</span>
+              <span className={styles.contactCardIcon} aria-hidden>
+                <Phone size={22} strokeWidth={1.85} />
+              </span>
+              <span className={styles.contactCardBody}>
+                <span className={styles.contactLabel}>{t("contact.labelPhone")}</span>
+                <span className={styles.contactValue}>{t("contact.phone")}</span>
+              </span>
             </motion.a>
             <motion.a
               className={styles.contactCard}
               href="mailto:manuelrodriguezgarcia.wd@gmail.com"
               variants={fadeInUp}
             >
-              <span className={styles.contactLabel}>Email</span>
-              <span className={styles.contactValue}>{t("contact.email")}</span>
+              <span className={styles.contactCardIcon} aria-hidden>
+                <Mail size={22} strokeWidth={1.85} />
+              </span>
+              <span className={styles.contactCardBody}>
+                <span className={styles.contactLabel}>{t("contact.labelEmail")}</span>
+                <span className={styles.contactValue}>{t("contact.email")}</span>
+              </span>
             </motion.a>
             <motion.div className={styles.contactCard} variants={fadeInUp}>
-              <span className={styles.contactLabel}>Location</span>
-              <span className={styles.contactValue}>{t("contact.location")}</span>
+              <span className={styles.contactCardIcon} aria-hidden>
+                <MapPin size={22} strokeWidth={1.85} />
+              </span>
+              <span className={styles.contactCardBody}>
+                <span className={styles.contactLabel}>{t("contact.labelLocation")}</span>
+                <span className={styles.contactValue}>{t("contact.location")}</span>
+              </span>
             </motion.div>
             <motion.a
               className={styles.contactCard}
@@ -826,8 +942,13 @@ export default function PortfolioContent() {
               rel="noopener noreferrer"
               variants={fadeInUp}
             >
-              <span className={styles.contactLabel}>{t("contact.linkedin")}</span>
-              <span className={styles.contactValue}>manuel-agustin-rodriguez-garcia</span>
+              <span className={styles.contactCardIcon} aria-hidden>
+                <Linkedin size={22} strokeWidth={1.85} />
+              </span>
+              <span className={styles.contactCardBody}>
+                <span className={styles.contactLabel}>{t("contact.labelLinkedin")}</span>
+                <span className={styles.contactValue}>manuel-agustin-rodriguez-garcia</span>
+              </span>
             </motion.a>
             <motion.a
               className={styles.contactCard}
@@ -836,8 +957,13 @@ export default function PortfolioContent() {
               rel="noopener noreferrer"
               variants={fadeInUp}
             >
-              <span className={styles.contactLabel}>{t("contact.github")}</span>
-              <span className={styles.contactValue}>manuelAgustinRodriguezGarcia</span>
+              <span className={styles.contactCardIcon} aria-hidden>
+                <Github size={22} strokeWidth={1.85} />
+              </span>
+              <span className={styles.contactCardBody}>
+                <span className={styles.contactLabel}>{t("contact.labelGithub")}</span>
+                <span className={styles.contactValue}>manuelAgustinRodriguezGarcia</span>
+              </span>
             </motion.a>
           </div>
         </motion.div>
