@@ -1,16 +1,14 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
-import { Cog } from "lucide-react";
+import { ChevronDown, Cog, Menu, X } from "lucide-react";
 import Image from "next/image";
 import styles from "./PortfolioContent.module.scss";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import HeroParticles from "./HeroParticles";
-import FloatingContact from "./FloatingContact";
-
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
@@ -23,6 +21,32 @@ const stagger = {
   },
 };
 
+const menuEase = [0.4, 0, 0.2, 1] as const;
+
+const menuLadder = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.16,
+      ease: menuEase,
+      staggerChildren: -0.04,
+    },
+  },
+};
+
+const menuItemLadder = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      opacity: { duration: 0.06, ease: menuEase },
+      y: { duration: 0.22, ease: menuEase },
+    },
+  },
+};
+
 export default function PortfolioContent() {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
@@ -30,11 +54,20 @@ export default function PortfolioContent() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState<string | null>(null);
   const showCornerIdentity = activeHash !== null;
+  const navRef = useRef<HTMLElement | null>(null);
+  const [isNavNarrow, setIsNavNarrow] = useState(false);
+  const menuOpenRef = useRef(menuOpen);
+  const activeUpdateFreezeUntilRef = useRef(0);
+  const lastActiveUpdateRef = useRef(0);
 
   const heroFullName = t("hero.name");
-  const heroNameOptions = useMemo(
-    () => ["Manuel", "Manuel Rodriguez", heroFullName],
-    [heroFullName]
+  const heroNameOptions = useMemo(() => ["Manuel", "Manuel Rodriguez"], []);
+  const heroNameSizerText = useMemo(
+    () =>
+      heroNameOptions.reduce((max, current) =>
+        current.length > max.length ? current : max
+      , ""),
+    [heroNameOptions]
   );
   const [heroOptionIndex, setHeroOptionIndex] = useState(0);
   const [heroCharCount, setHeroCharCount] = useState(0);
@@ -71,9 +104,44 @@ export default function PortfolioContent() {
   }, []);
 
   useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const width = el.getBoundingClientRect().width;
+      setIsNavNarrow(width <= 900);
+    };
+
+    update();
+
+    const ro = new ResizeObserver(() => update());
+    ro.observe(el);
+
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+    if (menuOpen) {
+      activeUpdateFreezeUntilRef.current = Date.now() + 420;
+      lastActiveUpdateRef.current = 0;
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (activeHash === null) setMenuOpen(false);
+  }, [activeHash]);
+
+  useEffect(() => {
     const ids = ["hero", "profile", "experience", "education", "skills", "contact"];
 
     const computeActive = () => {
+      if (menuOpenRef.current) {
+        const now = Date.now();
+        if (now < activeUpdateFreezeUntilRef.current) return;
+        if (now - lastActiveUpdateRef.current < 120) return;
+      }
+
       const scrollY = window.scrollY;
       const viewportH = window.innerHeight;
       const center = scrollY + viewportH / 2;
@@ -99,6 +167,8 @@ export default function PortfolioContent() {
       } else {
         setActiveHash((current) => (current === `#${bestId}` ? current : `#${bestId}`));
       }
+
+      lastActiveUpdateRef.current = Date.now();
     };
 
     let ticking = false;
@@ -129,6 +199,13 @@ export default function PortfolioContent() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onScroll = () => setMenuOpen(false);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [menuOpen]);
 
   useEffect(() => {
@@ -173,9 +250,9 @@ export default function PortfolioContent() {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const typingMs = 90;
-    const holdingMs = 3000; // esperar 3s cuando termina de escribir la opción
-    const deletingMs = 125; // borrado bastante mas lento
-    const betweenMs = 180; // transicion pequeña entre modos
+    const holdingMs = 3000;
+    const deletingMs = 125;
+    const betweenMs = 180;
 
     const currentTarget = () => heroNameOptions[optionIndex] ?? "";
 
@@ -235,119 +312,208 @@ export default function PortfolioContent() {
 
   const onNavClick = () => setMenuOpen(false);
 
+  const scrollToAbout = () => {
+    const target = document.querySelector<HTMLElement>("#profile");
+    if (!target) return;
+    const navOffset = 72;
+    const rect = target.getBoundingClientRect();
+    const absoluteTop = rect.top + window.scrollY;
+    window.scrollTo({
+      top: absoluteTop - navOffset,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToHref = (href: string) => {
+    const target = document.querySelector<HTMLElement>(href);
+    if (!target) return;
+    const navOffset = 72;
+    const rect = target.getBoundingClientRect();
+    const absoluteTop = rect.top + window.scrollY;
+    window.scrollTo({
+      top: absoluteTop - navOffset,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
-      <FloatingContact />
-      <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ""}`}>
-        <a
-          href="#hero"
-          className={styles.logo}
-          onClick={(event) => {
-            event.preventDefault();
-            onNavClick();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          aria-label="Home"
-        >
-          <span className={styles.logoIdentity} aria-hidden="true">
-            <AnimatePresence mode="wait">
-              {showCornerIdentity ? (
-                <motion.span
-                  key="identity"
-                  className={styles.logoIdentityVisible}
-                  initial={{ y: -14, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -14, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                >
-                  <Image
-                    src="/avatar.png"
-                    alt=""
-                    width={34}
-                    height={34}
-                    className={styles.logoAvatarImage}
-                    priority
-                  />
-                  <span className={styles.logoAvatarTextWrap} aria-hidden="true">
-                    <span className={styles.logoAvatarTextShort}>MRG</span>
-                    <span className={styles.logoAvatarTextFull}>Manuel Rodriguez Garcia</span>
-                  </span>
-                </motion.span>
-              ) : (
-                <motion.span
-                  key="hidden"
-                  className={styles.logoIdentityHidden}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.1 }}
-                />
-              )}
-            </AnimatePresence>
-          </span>
-        </a>
-        <div className={styles.links} aria-label="Primary">
-          {navItems.map((item) => {
-            const isActive = activeHash === item.href;
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(event) => {
-                  event.preventDefault();
-                  onNavClick();
-                  const target = document.querySelector<HTMLElement>(item.href);
-                  if (!target) return;
-                  const navOffset = 72;
-                  const rect = target.getBoundingClientRect();
-                  const absoluteTop = rect.top + window.scrollY;
-                  window.scrollTo({
-                    top: absoluteTop - navOffset,
-                    behavior: "smooth",
-                  });
-                }}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {isActive && activeHash && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className={styles.linksPill}
-                    transition={{
-                      type: "spring",
-                      stiffness: 420,
-                      damping: 32,
-                      mass: 0.3,
+      <nav
+        ref={navRef}
+        className={`${styles.nav} ${scrolled ? styles.navScrolled : ""} ${
+          isNavNarrow ? styles.navMobile : ""
+        } ${isNavNarrow && showCornerIdentity ? styles.navMobileVisible : ""}`}
+        aria-hidden={isNavNarrow && !showCornerIdentity ? true : undefined}
+      >
+        {!isNavNarrow ? (
+          <>
+            <a
+              href="#hero"
+              className={styles.logo}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavClick();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              aria-label="Home"
+            >
+              <span className={styles.logoIdentity} aria-hidden="true">
+                <span className={styles.logoDesktopIdentity} style={{ display: "inline-flex" }}>
+                  <AnimatePresence mode="wait">
+                    {showCornerIdentity ? (
+                      <motion.span
+                        key="identity"
+                        className={styles.logoIdentityVisible}
+                        initial={{ y: -14, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -14, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                      >
+                        <Image
+                          src="/avatar.png"
+                          alt=""
+                          width={34}
+                          height={34}
+                          className={styles.logoAvatarImage}
+                          priority
+                        />
+                        <span className={styles.logoAvatarTextWrap} aria-hidden="true">
+                          <span className={styles.logoAvatarTextShort}>MRG</span>
+                          <span className={styles.logoAvatarTextFull}>Manuel Rodriguez Garcia</span>
+                          <span className={styles.logoAvatarTextMobile}>Manuel Rodriguez</span>
+                        </span>
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="hidden"
+                        className={styles.logoIdentityHidden}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.1 }}
+                      />
+                    )}
+                  </AnimatePresence>
+                </span>
+              </span>
+            </a>
+            <div className={styles.links} aria-label="Primary">
+              {navItems.map((item) => {
+                const isActive = activeHash === item.href;
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      onNavClick();
+                      const target = document.querySelector<HTMLElement>(item.href);
+                      if (!target) return;
+                      const navOffset = 72;
+                      const rect = target.getBoundingClientRect();
+                      const absoluteTop = rect.top + window.scrollY;
+                      window.scrollTo({
+                        top: absoluteTop - navOffset,
+                        behavior: "smooth",
+                      });
                     }}
-                    aria-hidden="true"
-                  />
-                )}
-                <span className={styles.linkLabel}>{item.label}</span>
-              </a>
-            );
-          })}
-          <button
-            type="button"
-            className={styles.settingsButton}
-            aria-label="Settings"
-            aria-expanded={settingsOpen}
-            aria-controls="settings-panel"
-            onClick={() => setSettingsOpen((v) => !v)}
-          >
-            <Cog size={18} />
-          </button>
-        </div>
-
-        <button
-          type="button"
-          className={styles.menuButton}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span className={styles.menuIcon} aria-hidden="true" data-open={menuOpen} />
-        </button>
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {isActive && activeHash && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        className={styles.linksPill}
+                        transition={{
+                          type: "spring",
+                          stiffness: 420,
+                          damping: 32,
+                          mass: 0.3,
+                        }}
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span className={styles.linkLabel}>{item.label}</span>
+                  </a>
+                );
+              })}
+              <button
+                type="button"
+                className={styles.settingsButton}
+                aria-label="Settings"
+                aria-expanded={settingsOpen}
+                aria-controls="settings-panel"
+                onClick={() => setSettingsOpen((v) => !v)}
+              >
+                <Cog size={18} />
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className={styles.navMobileIdentityRow}>
+            <a
+              href="#hero"
+              className={styles.logo}
+              tabIndex={showCornerIdentity ? 0 : -1}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavClick();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              aria-label="Home"
+            >
+              <span className={styles.logoIdentity} aria-hidden="true">
+                <span className={styles.logoMobileIdentity} style={{ display: "inline-flex" }}>
+                  <span className={styles.logoMobileIdentityContent}>
+                    <Image
+                      src="/avatar.png"
+                      alt=""
+                      width={34}
+                      height={34}
+                      className={styles.logoAvatarImage}
+                      priority
+                    />
+                    <span className={styles.logoAvatarTextWrap} aria-hidden="true">
+                      <span className={styles.logoAvatarTextMobile}>
+                        Manuel Rodriguez
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </a>
+          </div>
+        )}
       </nav>
+      {isNavNarrow && (
+        <AnimatePresence>
+          {showCornerIdentity && (
+            <motion.div
+              key="menuButtonDock"
+              className={styles.menuButtonDock}
+              initial={{ y: 72, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 72, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 420, damping: 34 }}
+            >
+              <button
+                type="button"
+                className={styles.menuButton}
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
+                onClick={() => setMenuOpen((v) => !v)}
+                tabIndex={0}
+              >
+                {menuOpen ? (
+                  <X size={20} strokeWidth={2} aria-hidden="true" />
+                ) : (
+                  <Menu size={20} strokeWidth={2} aria-hidden="true" />
+                )}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
 
       <AnimatePresence>
         {settingsOpen && (
@@ -375,42 +541,53 @@ export default function PortfolioContent() {
         )}
       </AnimatePresence>
 
-      {menuOpen && (
-        <motion.div
-          className={styles.menuOverlay}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setMenuOpen(false)}
-        >
+      <AnimatePresence>
+        {menuOpen && (
           <motion.div
-            id="mobile-menu"
-            className={styles.menuPanel}
-            role="dialog"
-            aria-modal="true"
-            initial={{ y: -8, opacity: 0, scale: 0.98 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            transition={{ duration: 0.18 }}
-            onClick={(e) => e.stopPropagation()}
+            className={styles.menuOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMenuOpen(false)}
           >
-            <a href="#profile" onClick={onNavClick}>
-              {t("nav.about")}
-            </a>
-            <a href="#experience" onClick={onNavClick}>
-              {t("nav.experience")}
-            </a>
-            <a href="#education" onClick={onNavClick}>
-              {t("nav.education")}
-            </a>
-            <a href="#skills" onClick={onNavClick}>
-              {t("nav.skills")}
-            </a>
-            <a href="#contact" onClick={onNavClick}>
-              {t("nav.contact")}
-            </a>
+            <motion.div
+              id="mobile-menu"
+              className={styles.menuPanel}
+              role="dialog"
+              aria-modal="true"
+            variants={menuLadder}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            transition={{ duration: 0.18, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {navItems.map((item) => {
+                const isActive = activeHash === item.href;
+                return (
+                  <motion.button
+                    key={item.href}
+                    type="button"
+                    className={styles.mobileNavPill}
+                    data-active={isActive ? "true" : "false"}
+                    onClick={() => {
+                      onNavClick();
+                      scrollToHref(item.href);
+                    }}
+                    aria-current={isActive ? "page" : undefined}
+                    variants={menuItemLadder}
+                  >
+                    {isActive && (
+                      <span className={styles.mobileNavPillActiveBg} aria-hidden="true" />
+                    )}
+                    <span className={styles.mobileNavPillLabel}>{item.label}</span>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
 
       <section id="hero" className={`${styles.section} ${styles.hero}`}>
         <HeroParticles />
@@ -426,7 +603,7 @@ export default function PortfolioContent() {
             </motion.span>
             <motion.h1 className={styles.heroName} variants={fadeInUp}>
               <span className={styles.heroNameSizer} aria-hidden="true">
-                {heroFullName}
+                {heroNameSizerText}
               </span>
               <span className={styles.heroNameTyped} aria-hidden="true">
                 <span
@@ -491,6 +668,15 @@ export default function PortfolioContent() {
             </motion.div>
           </motion.div>
         </div>
+
+        <button
+          type="button"
+          className={styles.scrollDown}
+          onClick={scrollToAbout}
+          aria-label={t("nav.about")}
+        >
+          <ChevronDown size={18} />
+        </button>
       </section>
 
       <section id="profile" className={`${styles.section} ${styles.alt}`}>
