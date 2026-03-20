@@ -41,16 +41,82 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
     gap: 0.6rem;
   }
 
-  .logoMark {
-    width: 2.2rem;
-    height: 2.2rem;
-    display: grid;
-    place-items: center;
-    border-radius: 9999px;
-    background: radial-gradient(120% 120% at 0% 0%, rgba(34, 211, 238, 0.28) 0%, rgba(124, 58, 237, 0.22) 40%, rgba(255, 255, 255, 0.06) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
-  }
+.logoIdentity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  height: 2.2rem;
+}
+
+.logoIdentityVisible {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  will-change: transform, opacity;
+}
+
+.logoIdentityHidden {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+
+.logoAvatarImage {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.logoAvatarTextWrap {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  height: 1.15rem;
+  overflow: visible;
+  width: 2.65rem;
+  transition: width 0.4s ease;
+}
+
+.logoIdentityVisible:hover .logoAvatarTextWrap {
+  width: 13.5rem;
+}
+
+.logoAvatarTextShort,
+.logoAvatarTextFull {
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: $text;
+  white-space: nowrap;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: inline-block;
+}
+
+.logoAvatarTextShort {
+  opacity: 1;
+  transform: translateY(0);
+  line-height: 1;
+}
+
+.logoAvatarTextFull {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  line-height: normal;
+}
+
+.logoIdentityVisible:hover .logoAvatarTextShort {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.logoIdentityVisible:hover .logoAvatarTextFull {
+  opacity: 1;
+  transform: translateY(0);
+}
 
   .links {
     display: flex;
@@ -129,6 +195,7 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   inset: 0;
   z-index: 70;
   background: transparent;
+  pointer-events: none;
 }
 
 .settingsPanel {
@@ -146,6 +213,7 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   display: grid;
   gap: 0.75rem;
   overflow: hidden;
+  pointer-events: auto;
   transition: background $transition, border-color $transition, box-shadow $transition, backdrop-filter $transition;
 }
 
@@ -318,11 +386,70 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
     font-weight: 700;
     letter-spacing: -0.04em;
     margin-bottom: 0.5rem;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.88) 40%, rgba(255, 255, 255, 0.92) 100%);
+    white-space: nowrap;
+    position: relative;
+    display: inline-block;
+  }
+
+  .heroNameBase {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(255, 255, 255, 0.58) 40%,
+      rgba(255, 255, 255, 0.64) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     white-space: nowrap;
+    position: relative;
+    grid-area: 1 / 1;
+  }
+
+  .heroNameViolet {
+    background: linear-gradient(
+      90deg,
+      rgba(124, 58, 237, 0.98) 0%,
+      rgba(147, 51, 234, 0.92) 40%,
+      rgba(216, 180, 254, 0.98) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+    position: relative;
+    grid-area: 1 / 1;
+  }
+
+  .heroName {
+    position: relative;
+    display: inline-grid;
+  }
+
+  .heroNameSizer {
+    visibility: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    grid-area: 1 / 1;
+  }
+
+  .heroNameTyped {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: start center;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .heroLayerHidden {
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .heroLayerVisible {
+    opacity: 1;
+    transition: opacity 0.35s ease;
   }
 
   .role {
@@ -608,7 +735,14 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
   }
 
   .hero h1 {
-    white-space: normal;
+    white-space: nowrap;
+  }
+
+  .hero .heroName {
+    width: 100%;
+    text-align: center;
+    display: inline-grid;
+    justify-content: center;
   }
 
   .nav .links {
@@ -617,5 +751,9 @@ $content-gutter: clamp(1.25rem, 6vw, 100px);
 
   .menuButton {
     display: grid;
+  }
+
+  .heroCtas .ctaSecondary {
+    display: none;
   }
 }

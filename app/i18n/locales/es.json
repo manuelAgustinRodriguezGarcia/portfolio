@@ -86,5 +86,12 @@
     "location": "Barracas, CABA — Argentina",
     "linkedin": "LinkedIn",
     "github": "GitHub"
-  }
+  },
+  "fabContactEmailLabel": "Correo",
+  "fabContactPhoneLabel": "Teléfono",
+  "fabContactCopy": "Copiar",
+  "fabContactCopied": "Copiado",
+  "fabContactAriaOpen": "Abrir datos de contacto",
+  "fabContactAriaClose": "Cerrar datos de contacto",
+  "fabContactAriaCopy": "Copiar {{field}}"
 }

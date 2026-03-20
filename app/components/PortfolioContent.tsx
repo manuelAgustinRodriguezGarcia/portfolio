@@ -9,6 +9,7 @@ import styles from "./PortfolioContent.module.scss";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import HeroParticles from "./HeroParticles";
+import FloatingContact from "./FloatingContact";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
@@ -28,6 +29,18 @@ export default function PortfolioContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState<string | null>(null);
+  const showCornerIdentity = activeHash !== null;
+
+  const heroFullName = t("hero.name");
+  const heroNameOptions = useMemo(
+    () => ["Manuel", "Manuel Rodriguez", heroFullName],
+    [heroFullName]
+  );
+  const [heroOptionIndex, setHeroOptionIndex] = useState(0);
+  const [heroCharCount, setHeroCharCount] = useState(0);
+  const [heroIsViolet, setHeroIsViolet] = useState(false);
+  const heroTypedText =
+    heroNameOptions[heroOptionIndex]?.slice(0, heroCharCount) ?? "";
 
   const navItems = useMemo(
     () => [
@@ -127,10 +140,104 @@ export default function PortfolioContent() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [settingsOpen]);
 
+  useEffect(() => {
+    if (!settingsOpen) return;
+
+    const onMouseDown = (e: MouseEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+
+      const panel = document.getElementById("settings-panel");
+      const button = document.querySelector<HTMLButtonElement>(
+        'button[aria-controls="settings-panel"]'
+      );
+
+      const clickedInsidePanel = panel ? panel.contains(target) : false;
+      const clickedSettingsButton = button ? button.contains(target) : false;
+
+      if (clickedInsidePanel || clickedSettingsButton) return;
+      setSettingsOpen(false);
+    };
+
+    document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, [settingsOpen]);
+
+  useEffect(() => {
+    if (heroNameOptions.length === 0) return;
+
+    let cancelled = false;
+    let optionIndex = 0;
+    let charCount = 0;
+    let mode: "typing" | "holding" | "deleting" = "typing";
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const typingMs = 90;
+    const holdingMs = 3000; // esperar 3s cuando termina de escribir la opción
+    const deletingMs = 125; // borrado bastante mas lento
+    const betweenMs = 180; // transicion pequeña entre modos
+
+    const currentTarget = () => heroNameOptions[optionIndex] ?? "";
+
+    const step = () => {
+      if (cancelled) return;
+      const target = currentTarget();
+
+      if (mode === "typing") {
+        charCount += 1;
+        setHeroOptionIndex(optionIndex);
+        setHeroCharCount(charCount);
+
+        if (charCount >= target.length) {
+          setHeroIsViolet(true);
+          mode = "holding";
+          timeoutId = setTimeout(step, holdingMs);
+          return;
+        }
+
+        timeoutId = setTimeout(step, typingMs);
+        return;
+      }
+
+      if (mode === "holding") {
+        mode = "deleting";
+        timeoutId = setTimeout(step, betweenMs);
+        return;
+      }
+
+      charCount = Math.max(0, charCount - 1);
+      setHeroOptionIndex(optionIndex);
+      setHeroCharCount(charCount);
+
+      if (charCount === 0) {
+        setHeroIsViolet(false);
+        optionIndex = (optionIndex + 1) % heroNameOptions.length;
+        mode = "typing";
+        timeoutId = setTimeout(step, betweenMs);
+        return;
+      }
+
+      timeoutId = setTimeout(step, deletingMs);
+    };
+
+    timeoutId = setTimeout(() => {
+      setHeroOptionIndex(0);
+      setHeroCharCount(0);
+      setHeroIsViolet(false);
+      step();
+    }, 350);
+
+    return () => {
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [heroNameOptions]);
+
   const onNavClick = () => setMenuOpen(false);
 
   return (
     <>
+      <FloatingContact />
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ""}`}>
         <a
           href="#hero"
@@ -142,7 +249,42 @@ export default function PortfolioContent() {
           }}
           aria-label="Home"
         >
-          <span className={styles.logoMark}>MR</span>
+          <span className={styles.logoIdentity} aria-hidden="true">
+            <AnimatePresence mode="wait">
+              {showCornerIdentity ? (
+                <motion.span
+                  key="identity"
+                  className={styles.logoIdentityVisible}
+                  initial={{ y: -14, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -14, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                >
+                  <Image
+                    src="/avatar.png"
+                    alt=""
+                    width={34}
+                    height={34}
+                    className={styles.logoAvatarImage}
+                    priority
+                  />
+                  <span className={styles.logoAvatarTextWrap} aria-hidden="true">
+                    <span className={styles.logoAvatarTextShort}>MRG</span>
+                    <span className={styles.logoAvatarTextFull}>Manuel Rodriguez Garcia</span>
+                  </span>
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="hidden"
+                  className={styles.logoIdentityHidden}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.1 }}
+                />
+              )}
+            </AnimatePresence>
+          </span>
         </a>
         <div className={styles.links} aria-label="Primary">
           {navItems.map((item) => {
@@ -214,7 +356,6 @@ export default function PortfolioContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSettingsOpen(false)}
           >
             <motion.aside
               id="settings-panel"
@@ -283,7 +424,29 @@ export default function PortfolioContent() {
             <motion.span className={styles.greeting} variants={fadeInUp}>
               {t("hero.greeting")}
             </motion.span>
-            <motion.h1 variants={fadeInUp}>{t("hero.name")}</motion.h1>
+            <motion.h1 className={styles.heroName} variants={fadeInUp}>
+              <span className={styles.heroNameSizer} aria-hidden="true">
+                {heroFullName}
+              </span>
+              <span className={styles.heroNameTyped} aria-hidden="true">
+                <span
+                  className={`${styles.heroNameBase} ${
+                    heroIsViolet ? styles.heroLayerHidden : styles.heroLayerVisible
+                  }`}
+                >
+                  {heroTypedText}
+                </span>
+                <span
+                  className={`${styles.heroNameViolet} ${
+                    heroIsViolet
+                      ? styles.heroLayerVisible
+                      : styles.heroLayerHidden
+                  }`}
+                >
+                  {heroTypedText}
+                </span>
+              </span>
+            </motion.h1>
             <motion.p className={styles.role} variants={fadeInUp}>
               {t("hero.role")}
             </motion.p>
@@ -427,10 +590,6 @@ export default function PortfolioContent() {
             <motion.div className={styles.skillGroup} variants={fadeInUp}>
               <h4>{t("skills.frontend")}</h4>
               <p>{t("skills.frontendList")}</p>
-            </motion.div>
-            <motion.div className={styles.skillGroup} variants={fadeInUp}>
-              <h4>{t("skills.cms")}</h4>
-              <p>{t("skills.cmsList")}</p>
             </motion.div>
             <motion.div className={styles.skillGroup} variants={fadeInUp}>
               <h4>{t("skills.ui")}</h4>
