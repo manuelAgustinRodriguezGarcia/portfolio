@@ -85,7 +85,7 @@ const profileBlockFade = {
   },
 };
 
-const PROFILE_LINE_KEYS = [1, 2, 3, 4, 5, 6] as const;
+const PROFILE_LINE_KEYS = [1, 2, 5, 6] as const;
 
 const SKILL_ROWS = [
   { titleKey: "skills.frontend", listKey: "skills.frontendList", Icon: Code2 },
@@ -745,7 +745,7 @@ export default function PortfolioContent() {
               </span>
               <h2>{t("profile.title")}</h2>
             </div>
-            <p className={styles.profileHeadline}>
+            <h3 className={styles.profileHeadline}>
               <Trans
                 i18nKey="profile.headline"
                 components={{
@@ -753,17 +753,17 @@ export default function PortfolioContent() {
                   grad: <span className={styles.profileHeadlineGrad} />,
                 }}
               />
-            </p>
+            </h3>
           </motion.div>
           <motion.div className={styles.profileBlocks} variants={profileBlocksParent}>
-            {PROFILE_LINE_KEYS.map((n) => (
+            {PROFILE_LINE_KEYS.map((n, index) => (
               <motion.article
                 key={n}
                 className={styles.profileBlock}
                 variants={profileBlockFade}
               >
                 <span className={styles.profileBlockIndex} aria-hidden>
-                  {String(n).padStart(2, "0")}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className={styles.profileBlockText}>
                   <Trans

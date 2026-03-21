@@ -14,13 +14,11 @@
   },
   "profile": {
     "title": "Profile",
-    "headline": "<prim>A working site is not enough.</prim> <grad>One that feels right, is.</grad>",
+    "headline": "<prim>A functional site is not enough.</prim> <grad>A memorable site, yes!</grad>",
     "line1": "I help <accent>companies and founders</accent> earn trust online and turn visits into opportunities with clear, fast interfaces and obsessive attention to detail.",
-    "line2": "A site that represents you well changes how people see you: <accent>fewer doubts, more inquiries</accent>, and more time for what truly matters.",
-    "line3": "I design <accent>without friction</accent>, <accent>without generic copy</accent>, and <accent>without confusing surprises</accent>. It is not just shipping: it is your brand feeling clear and confident.",
-    "line4": "I am passionate about <accent>intentional design</accent> and <accent>aesthetic with purpose</accent> so your business goals show on every screen and you move beyond good enough.",
-    "line5": "A page can be <accent>functional</accent> and still feel cold. I aim for <accent>memorable</accent> experiences: usability that supports, not replaces, visual craft.",
-    "line6": "I am known for <accent>attention to detail</accent> in web solutions: clean code, smooth interactions, and a result people remember."
+    "line2": "A site that represents your brand changes how users perceive you: <accent>fewer doubts</accent>, <accent>more inquiries</accent>, and above all more <accent>trust built</accent> in the user.",
+    "line5": "A page can be <accent>functional</accent> and still feel cold. I aim for <accent>memorable</accent> experiences where clear usability and visual craft work together, without giving up either.",
+    "line6": "I am known for <accent>attention to detail</accent> in web solutions: clean code, smooth interactions, and as a result a standout experience for users."
   },
   "experience": {
     "title": "Experience",
