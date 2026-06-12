@@ -1,0 +1,55 @@
+@use "./variables" as *;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $bp-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $bp-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $bp-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: $bp-xl) {
+      @content;
+    }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: $bp-2xl) {
+      @content;
+    }
+  }
+}
+
+@mixin section-padding {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+@mixin focus-ring {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+@mixin surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  box-shadow: var(--shadow-card);
+}
+
+@mixin text-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

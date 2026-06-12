@@ -1,0 +1,118 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.empty {
+  @include surface-card;
+  display: grid;
+  gap: $space-4;
+  justify-items: start;
+  padding: clamp(2rem, 5vw, 3rem);
+  border-style: dashed;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: $radius-md;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.emptyTitle {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+
+.emptyDescription {
+  max-width: 52ch;
+  color: var(--text-muted);
+}
+
+.grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.card {
+  @include surface-card;
+  display: grid;
+  overflow: hidden;
+
+  @include respond-to(lg) {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+.preview {
+  position: relative;
+  min-height: 240px;
+  background: var(--bg-soft);
+}
+
+.previewImage {
+  object-fit: cover;
+}
+
+.previewPlaceholder {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, var(--accent-soft), transparent 55%),
+    linear-gradient(225deg, var(--accent-2-soft), transparent 50%),
+    var(--bg-soft);
+}
+
+.body {
+  display: grid;
+  gap: $space-4;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  align-content: start;
+}
+
+.meta {
+  display: flex;
+  gap: $space-3;
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+
+.title {
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+}
+
+.description {
+  color: var(--text-muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-4;
+  font-size: 0.9375rem;
+  font-weight: 600;
+
+  a {
+    color: var(--accent);
+
+    &:hover {
+      color: var(--accent-hover);
+    }
+  }
+}
+
+.caseLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+}

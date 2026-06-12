@@ -1,0 +1,27 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.main {
+  min-height: 100vh;
+  @include section-padding;
+}
+
+.inner {
+  width: min(100%, $content-max);
+  margin-inline: auto;
+  display: grid;
+  gap: $space-4;
+}
+
+.eyebrow {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+
+.inner a {
+  color: var(--accent);
+  font-weight: 600;
+}

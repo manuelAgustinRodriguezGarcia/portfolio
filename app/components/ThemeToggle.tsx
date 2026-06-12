@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./ThemeToggle.module.scss";
 
 type Theme = "dark" | "light";
@@ -18,6 +19,7 @@ function applyTheme(theme: Theme) {
 }
 
 export default function ThemeToggle() {
+  const { t } = useTranslation();
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function ThemeToggle() {
       type="button"
       className={styles.toggle}
       onClick={onToggle}
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={theme === "dark" ? t("settings.themeDark") : t("settings.themeLight")}
       title={theme === "dark" ? "Light" : "Dark"}
       data-theme={theme}
     >

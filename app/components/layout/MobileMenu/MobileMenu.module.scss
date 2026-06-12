@@ -1,0 +1,64 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: $z-overlay;
+  background: rgba(0, 0, 0, 0.42);
+  border: 0;
+}
+
+.panel {
+  position: fixed;
+  top: calc($nav-height + 0.75rem);
+  right: clamp(1rem, 3vw, 2rem);
+  left: clamp(1rem, 3vw, 2rem);
+  z-index: $z-modal;
+  display: grid;
+  gap: $space-5;
+  padding: $space-5;
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-soft);
+
+  @include respond-to(sm) {
+    left: auto;
+    width: min(100%, 360px);
+  }
+}
+
+.list {
+  display: grid;
+  gap: $space-2;
+  list-style: none;
+}
+
+.link {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.85rem 1rem;
+  border-radius: $radius-md;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition:
+    background $duration-base $ease-out,
+    color $duration-base $ease-out;
+
+  &:hover,
+  &.active {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  padding-top: $space-2;
+  border-top: 1px solid var(--border);
+}

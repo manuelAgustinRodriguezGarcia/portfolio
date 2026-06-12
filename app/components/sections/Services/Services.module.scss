@@ -1,0 +1,54 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.list {
+  display: grid;
+  gap: $space-3;
+  list-style: none;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include respond-to(xl) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $space-4;
+  align-items: center;
+  padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: linear-gradient(135deg, var(--surface) 0%, transparent 100%);
+  transition:
+    transform $duration-base $ease-out,
+    border-color $duration-base $ease-out,
+    background $duration-base $ease-out;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 100%);
+  }
+}
+
+.index {
+  font-family: $font-display;
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+
+.label {
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+  font-weight: 600;
+}
+
+@include reduced-motion {
+  .item:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,82 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.35rem;
+  border-radius: $radius-pill;
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition:
+    background $duration-base $ease-out,
+    border-color $duration-base $ease-out,
+    color $duration-base $ease-out,
+    transform $duration-base $ease-out,
+    box-shadow $duration-base $ease-out;
+}
+
+.inner {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 10px 30px var(--accent-soft);
+
+  &:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+}
+
+.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+
+  &:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+  }
+}
+
+.ghost {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+
+  &:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.magnetic {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.18), transparent 55%);
+    opacity: 0;
+    transition: opacity $duration-base $ease-out;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+@include reduced-motion {
+  .button:hover {
+    transform: none;
+  }
+}

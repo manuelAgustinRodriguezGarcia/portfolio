@@ -1,0 +1,35 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.section {
+  @include section-padding;
+  position: relative;
+}
+
+.alt {
+  background:
+    linear-gradient(180deg, transparent 0%, var(--surface) 18%, transparent 100%);
+}
+
+.inner {
+  width: min(100%, $section-max);
+  margin-inline: auto;
+}
+
+.header {
+  display: grid;
+  gap: $space-4;
+  max-width: 760px;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  color: var(--text);
+}
+
+.description {
+  max-width: 62ch;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+}

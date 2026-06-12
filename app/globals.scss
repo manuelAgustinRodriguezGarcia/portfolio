@@ -1,49 +1,101 @@
 @use "./styles/variables" as *;
+@use "./styles/mixins" as *;
 
-:root {
-  --bg: #{$color-bg};
-  --text: #{$color-text};
-  --text-muted: #{$color-text-muted};
-  --border: #{$color-border};
-  --surface: #{$color-surface};
-  --accent: #{$color-accent};
-  --accent-2: #{$color-accent-2};
-  --purple-rain: #{$purple_rain};
+:root,
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #06060a;
+  --bg-elevated: #0e0e14;
+  --bg-soft: #12121a;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --surface-strong: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: rgba(255, 255, 255, 0.94);
+  --text-muted: rgba(255, 255, 255, 0.66);
+  --text-faint: rgba(255, 255, 255, 0.42);
+  --accent: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --accent-soft: rgba(139, 92, 246, 0.14);
+  --accent-2: #22d3ee;
+  --accent-2-soft: rgba(34, 211, 238, 0.12);
+  --accent-warm: #f59e0b;
+  --accent-warm-soft: rgba(245, 158, 11, 0.12);
+  --hero-glow: rgba(139, 92, 246, 0.22);
+  --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.32);
+  --nav-bg: rgba(6, 6, 10, 0.72);
+  --selection: rgba(139, 92, 246, 0.35);
 }
 
 html[data-theme="light"] {
-  --bg: #f7f7fb;
-  --text: rgba(10, 10, 14, 0.92);
-  --text-muted: rgba(10, 10, 14, 0.62);
-  --border: rgba(10, 10, 14, 0.14);
-  --surface: rgba(10, 10, 14, 0.04);
+  color-scheme: light;
+
+  --bg: #f8f6f3;
+  --bg-elevated: #ffffff;
+  --bg-soft: #f0ece6;
+  --surface: rgba(20, 16, 28, 0.04);
+  --surface-hover: rgba(20, 16, 28, 0.07);
+  --surface-strong: rgba(20, 16, 28, 0.08);
+  --border: rgba(20, 16, 28, 0.1);
+  --border-strong: rgba(20, 16, 28, 0.16);
+  --text: rgba(18, 14, 26, 0.92);
+  --text-muted: rgba(18, 14, 26, 0.62);
+  --text-faint: rgba(18, 14, 26, 0.42);
   --accent: #6d28d9;
+  --accent-hover: #5b21b6;
+  --accent-soft: rgba(109, 40, 217, 0.1);
   --accent-2: #0891b2;
+  --accent-2-soft: rgba(8, 145, 178, 0.1);
+  --accent-warm: #d97706;
+  --accent-warm-soft: rgba(217, 119, 6, 0.1);
+  --hero-glow: rgba(109, 40, 217, 0.12);
+  --shadow-soft: 0 24px 80px rgba(20, 16, 28, 0.08);
+  --shadow-card: 0 12px 40px rgba(20, 16, 28, 0.06);
+  --nav-bg: rgba(248, 246, 243, 0.82);
+  --selection: rgba(109, 40, 217, 0.22);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-html,
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  max-width: 100vw;
+  min-height: 100vh;
+  color: var(--text);
+  background: var(--bg);
+  font-family: $font-body;
+  font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-body {
-  color: var(--text);
-  background: var(--bg);
-  font-family: $font-sans;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: geometricPrecision;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-display;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 a {
@@ -51,19 +103,34 @@ a {
   text-decoration: none;
 }
 
-html {
-  color-scheme: dark;
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-html[data-theme="light"] {
-  color-scheme: light;
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
 ::selection {
-  background: rgba(124, 58, 237, 0.35);
+  background: var(--selection);
 }
 
 :focus-visible {
-  outline: 2px solid rgba(34, 211, 238, 0.85);
-  outline-offset: 2px;
+  @include focus-ring;
+}
+
+@include reduced-motion {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

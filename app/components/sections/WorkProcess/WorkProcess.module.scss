@@ -1,0 +1,90 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.track {
+  display: grid;
+  gap: 0;
+  list-style: none;
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: $space-4;
+  }
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $space-5;
+  padding-block: $space-5;
+
+  @include respond-to(lg) {
+    display: block;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    border: 1px solid var(--border);
+    border-radius: $radius-lg;
+    background: var(--surface);
+  }
+}
+
+.marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  font-family: $font-display;
+  font-size: 0.875rem;
+  color: var(--accent);
+}
+
+.line {
+  flex: 1;
+  width: 2px;
+  min-height: 48px;
+  margin-top: $space-2;
+  background: linear-gradient(180deg, var(--accent), transparent);
+
+  @include respond-to(lg) {
+    display: none;
+  }
+}
+
+.content {
+  display: grid;
+  gap: $space-3;
+  padding-bottom: $space-2;
+
+  h3 {
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+  }
+
+  p {
+    color: var(--text-muted);
+    max-width: 34ch;
+  }
+}
+
+@include respond-to(lg) {
+  .step:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    transform: translateY(-3px);
+    transition: transform $duration-base $ease-out, border-color $duration-base $ease-out;
+  }
+}
+
+@include reduced-motion {
+  .step:hover {
+    transform: none;
+  }
+}

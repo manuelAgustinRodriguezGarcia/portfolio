@@ -1,27 +1,82 @@
 {
   "nav": {
+    "home": "Home",
     "about": "About",
+    "projects": "Projects",
     "experience": "Experience",
-    "education": "Education",
-    "skills": "Skills",
     "contact": "Contact"
   },
   "hero": {
+    "label": "Frontend Developer · Buenos Aires",
     "greeting": "Hi, I'm",
     "name": "Manuel Rodriguez Garcia",
     "role": "Frontend Developer",
-    "cta": "Learn more"
+    "valueProposition": "I build memorable web interfaces that combine clarity, performance, and visual craft to earn trust and turn visits into opportunities.",
+    "cta": "Learn more",
+    "ctaProjects": "View projects",
+    "ctaContact": "Contact"
   },
   "profile": {
     "title": "Profile",
+    "label": "About",
     "headline": "<prim>A functional site is not enough.</prim> <grad>A memorable site, yes!</grad>",
     "line1": "I help <accent>companies and founders</accent> earn trust online and turn visits into opportunities with clear, fast interfaces and obsessive attention to detail.",
     "line2": "A site that represents your brand changes how users perceive you: <accent>fewer doubts</accent>, <accent>more inquiries</accent>, and above all more <accent>trust built</accent> in the user.",
     "line5": "A page can be <accent>functional</accent> and still feel cold. I aim for <accent>memorable</accent> experiences where clear usability and visual craft work together, without giving up either.",
     "line6": "I am known for <accent>attention to detail</accent> in web solutions: clean code, smooth interactions, and as a result a standout experience for users."
   },
+  "projects": {
+    "title": "Featured projects",
+    "label": "Projects",
+    "description": "A selection of work where frontend craft, experience design, and visual detail take center stage.",
+    "emptyTitle": "Projects in progress",
+    "emptyDescription": "I'm preparing case studies to showcase here. In the meantime, feel free to explore my experience, skills, and contact options.",
+    "emptyCta": "View experience",
+    "viewCaseStudy": "View case study",
+    "liveDemo": "Live demo",
+    "repository": "Repository",
+    "featured": "Featured",
+    "technologies": "Technologies"
+  },
+  "skills": {
+    "title": "Technical skills",
+    "label": "Stack",
+    "description": "Tools and technologies I use to build modern, accessible, and maintainable interfaces."
+  },
+  "frontendLab": {
+    "title": "Frontend Lab",
+    "label": "Experiments",
+    "description": "A space to explore animations, microinteractions, and visual components inspired by modern frontend references.",
+    "comingSoon": "Coming soon",
+    "slotLabel": "Experiment {{number}}",
+    "slotDescription": "Reserved for an interactive demo."
+  },
+  "process": {
+    "title": "Work process",
+    "label": "How I work",
+    "description": "A clear approach from understanding the problem to a polished delivery.",
+    "understand": {
+      "title": "Understand",
+      "description": "I analyze the problem, users, and project goals to define real priorities."
+    },
+    "design": {
+      "title": "Design",
+      "description": "I define structure, style, and experience with visual judgment and usability in mind."
+    },
+    "develop": {
+      "title": "Develop",
+      "description": "I build reusable, responsive, and maintainable components with solid practices."
+    },
+    "optimize": {
+      "title": "Optimize",
+      "description": "I review accessibility, performance, and visual details before delivery."
+    }
+  },
   "experience": {
     "title": "Experience",
+    "label": "Career",
+    "educationTitle": "Education",
+    "languagesTitle": "Languages",
     "items": [
       {
         "role": "Frontend Developer",
@@ -51,7 +106,6 @@
     ]
   },
   "education": {
-    "title": "Education",
     "items": [
       {
         "name": "Web Development Associate Degree",
@@ -66,12 +120,10 @@
     ]
   },
   "languages": {
-    "title": "Languages",
     "spanish": "Spanish — Native",
     "english": "English — Advanced C2 (CEFR)"
   },
-  "skills": {
-    "title": "Technical skills",
+  "skillsData": {
     "frontend": "Frontend",
     "frontendList": "HTML, CSS, SCSS, Tailwind, JavaScript, TypeScript, React, Next.js",
     "cms": "CMS & tools",
@@ -83,8 +135,22 @@
     "versionControl": "Version control",
     "versionControlList": "GitHub"
   },
+  "services": {
+    "title": "Services",
+    "label": "What I do",
+    "description": "Frontend solutions focused on clarity, performance, and an experience that represents your brand well.",
+    "landingPages": "Landing pages",
+    "corporateSites": "Corporate websites",
+    "ecommerceFrontend": "Ecommerce frontend",
+    "webApps": "Web applications",
+    "interfaceRedesign": "Interface redesign",
+    "frontendDevelopment": "Frontend development"
+  },
   "contact": {
     "title": "Contact",
+    "label": "Let's talk",
+    "headline": "Have a project, job opportunity, or idea you'd like to discuss?",
+    "description": "I'm open to collaborations, new challenges, and conversations about well-crafted digital products.",
     "labelPhone": "Phone",
     "labelEmail": "Email",
     "labelLocation": "Location",
@@ -93,14 +159,27 @@
     "phone": "+54 11 3889 9722",
     "email": "manuelrodriguezgarcia.wd@gmail.com",
     "location": "Barracas, CABA — Argentina",
-    "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "copyEmail": "Copy email",
+    "copied": "Copied"
   },
-  "fabContactEmailLabel": "Email",
-  "fabContactPhoneLabel": "Phone",
-  "fabContactCopy": "Copy",
-  "fabContactCopied": "Copied",
-  "fabContactAriaOpen": "Open contact details",
-  "fabContactAriaClose": "Close contact details",
-  "fabContactAriaCopy": "Copy {{field}}"
+  "footer": {
+    "backToTop": "Back to top",
+    "rights": "All rights reserved."
+  },
+  "settings": {
+    "open": "Open settings",
+    "close": "Close settings",
+    "themeDark": "Switch to light mode",
+    "themeLight": "Switch to dark mode",
+    "languageEs": "Switch to English",
+    "languageEn": "Switch to Spanish"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu"
+  },
+  "a11y": {
+    "externalLink": "(opens in a new tab)",
+    "decorativeIllustration": "Decorative illustration"
+  }
 }

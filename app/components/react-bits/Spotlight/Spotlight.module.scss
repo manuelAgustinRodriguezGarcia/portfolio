@@ -1,0 +1,48 @@
+@use "../../../styles/variables" as *;
+
+.wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glowPrimary {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: min(52vw, 520px);
+  height: min(52vw, 520px);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--hero-glow) 0%, transparent 68%);
+  filter: blur(12px);
+}
+
+.glowSecondary {
+  position: absolute;
+  bottom: -10%;
+  left: -8%;
+  width: min(40vw, 380px);
+  height: min(40vw, 380px);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-2-soft) 0%, transparent 70%);
+  filter: blur(10px);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 35%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 35%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 40%, black 20%, transparent 75%);
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glowPrimary,
+  .glowSecondary {
+    animation: none !important;
+  }
+}

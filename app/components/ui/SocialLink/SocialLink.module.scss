@@ -1,0 +1,25 @@
+@use "../../../styles/variables" as *;
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-pill;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition:
+    background $duration-base $ease-out,
+    border-color $duration-base $ease-out,
+    transform $duration-base $ease-out,
+    color $duration-base $ease-out;
+
+  &:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+}

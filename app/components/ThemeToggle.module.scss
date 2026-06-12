@@ -14,7 +14,7 @@ $track-width: 4.5rem;
   background: transparent;
   border: none;
   cursor: pointer;
-  border-radius: 9999px;
+  border-radius: $radius-pill;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
@@ -26,12 +26,12 @@ $track-width: 4.5rem;
   height: 100%;
   padding: $track-padding;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 9999px;
-  transition: background $transition, border-color $transition;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius-pill;
+  transition:
+    background $duration-base $ease-out,
+    border-color $duration-base $ease-out;
 }
 
 .knob {
@@ -40,13 +40,14 @@ $track-width: 4.5rem;
   top: 50%;
   width: $knob-size;
   height: $knob-size;
-  border-radius: 9999px;
+  border-radius: $radius-pill;
   display: grid;
   place-items: center;
   transform: translate3d(0, -50%, 0);
   transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(220, 220, 220, 0.9) 100%);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
   will-change: transform;
   z-index: 0;
 }
@@ -54,10 +55,15 @@ $track-width: 4.5rem;
 .knobIcon {
   display: grid;
   place-items: center;
-  color: rgba(10, 10, 10, 0.78);
+  color: var(--text);
 }
 
 .toggle[data-theme="light"] .knob {
   transform: translate3d(calc(#{$track-width} - #{$knob-size} - #{$track-padding} * 2), -50%, 0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .knob {
+    transition: none;
+  }
+}

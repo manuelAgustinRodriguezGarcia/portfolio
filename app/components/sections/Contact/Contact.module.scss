@@ -1,0 +1,98 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.intro {
+  display: grid;
+  gap: $space-4;
+  max-width: 720px;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.headline {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.description {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+}
+
+.grid {
+  display: grid;
+  gap: $space-4;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include respond-to(xl) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card,
+.copyCard {
+  @include surface-card;
+  display: grid;
+  gap: $space-2;
+  padding: clamp(1.1rem, 2.5vw, 1.5rem);
+  min-height: 132px;
+  transition:
+    transform $duration-base $ease-out,
+    border-color $duration-base $ease-out;
+
+  svg {
+    color: var(--accent);
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  }
+}
+
+.label {
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.value {
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.copyCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyButton {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  justify-content: center;
+  min-height: 48px;
+  padding: $space-3;
+  border-radius: $radius-md;
+  color: var(--text);
+  font-weight: 600;
+  transition: background $duration-base $ease-out;
+
+  &:hover {
+    background: var(--surface-hover);
+  }
+}
+
+@include reduced-motion {
+  .card:hover,
+  .copyCard:hover {
+    transform: none;
+  }
+}

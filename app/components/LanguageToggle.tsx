@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./LanguageToggle.module.scss";
 
 export default function LanguageToggle() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const toggle = () => {
     const next = i18n.language === "es" ? "en" : "es";
@@ -19,7 +19,7 @@ export default function LanguageToggle() {
       type="button"
       className={styles.toggle}
       onClick={toggle}
-      aria-label={i18n.language === "es" ? "Switch to English" : "Cambiar a español"}
+      aria-label={i18n.language === "es" ? t("settings.languageEs") : t("settings.languageEn")}
       title={i18n.language === "es" ? "English" : "Español"}
       data-lang={i18n.language}
     >

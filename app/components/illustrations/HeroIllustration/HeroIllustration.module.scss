@@ -1,0 +1,56 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.root {
+  position: relative;
+  width: min(100%, 420px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.backdrop,
+.foreground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.foreground {
+  z-index: 3;
+}
+
+.avatarFrame {
+  position: absolute;
+  inset: 14% 12%;
+  z-index: 2;
+}
+
+.avatarGlow {
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--hero-glow) 0%, transparent 70%);
+  filter: blur(8px);
+}
+
+.avatarInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 42% 58% 54% 46% / 48% 42% 58% 52%;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-soft);
+}
+
+.avatar {
+  object-fit: cover;
+}
+
+@include respond-to(md) {
+  .root {
+    width: min(100%, 480px);
+  }
+}

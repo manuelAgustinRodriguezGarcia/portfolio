@@ -1,27 +1,82 @@
 {
   "nav": {
+    "home": "Inicio",
     "about": "Sobre mí",
+    "projects": "Proyectos",
     "experience": "Experiencia",
-    "education": "Estudios",
-    "skills": "Habilidades",
     "contact": "Contacto"
   },
   "hero": {
+    "label": "Desarrollador Frontend · Buenos Aires",
     "greeting": "Hola, soy",
     "name": "Manuel Rodriguez Garcia",
     "role": "Desarrollador Frontend",
-    "cta": "Conocer más"
+    "valueProposition": "Creo interfaces web memorables que combinan claridad, rendimiento y criterio visual para generar confianza y convertir visitas en oportunidades.",
+    "cta": "Conocer más",
+    "ctaProjects": "Ver proyectos",
+    "ctaContact": "Contacto"
   },
   "profile": {
     "title": "Perfil",
+    "label": "Sobre mí",
     "headline": "<prim>Una web funcional no alcanza.</prim> <grad>Una web memorable, sí!</grad>",
     "line1": "Ayudo a <accent>empresas y emprendedores</accent> a ganar confianza online y convertir visitas en oportunidades con interfaces claras, rápidas y con atención obsesiva al detalle.",
     "line2": "Una web que representa a tu marca cambia cómo los usuarios te perciben: <accent>menos dudas</accent>, <accent>más consultas</accent> y sobre todo más <accent>confianza generada</accent> en el usuario.",
     "line5": "Una página puede ser <accent>funcional</accent> y aún así sentirse fría. Yo busco experiencias <accent>memorables</accent> donde conviven la usabilidad clara y el criterio visual, sin renunciar a ninguna de las dos.",
     "line6": "Me reconocen por la <accent>atención al detalle</accent> al crear soluciones web: código limpio, interacciones fluidas y como resultado una experiencia destacable para los usuarios."
   },
+  "projects": {
+    "title": "Proyectos destacados",
+    "label": "Proyectos",
+    "description": "Selección de trabajos donde el frontend, la experiencia y el detalle visual son protagonistas.",
+    "emptyTitle": "Proyectos en preparación",
+    "emptyDescription": "Estoy organizando los casos de estudio para mostrarlos aquí. Mientras tanto, podés explorar mi experiencia, habilidades y formas de contacto.",
+    "emptyCta": "Ver experiencia",
+    "viewCaseStudy": "Ver caso de estudio",
+    "liveDemo": "Demo en vivo",
+    "repository": "Repositorio",
+    "featured": "Destacado",
+    "technologies": "Tecnologías"
+  },
+  "skills": {
+    "title": "Habilidades técnicas",
+    "label": "Stack",
+    "description": "Herramientas y tecnologías con las que construyo interfaces modernas, accesibles y mantenibles."
+  },
+  "frontendLab": {
+    "title": "Laboratorio Frontend",
+    "label": "Experimentos",
+    "description": "Espacio para explorar animaciones, microinteracciones y componentes visuales inspirados en las mejores referencias del frontend moderno.",
+    "comingSoon": "Próximamente",
+    "slotLabel": "Experimento {{number}}",
+    "slotDescription": "Reservado para una demostración interactiva."
+  },
+  "process": {
+    "title": "Proceso de trabajo",
+    "label": "Cómo trabajo",
+    "description": "Un enfoque claro desde la comprensión del problema hasta la entrega cuidada.",
+    "understand": {
+      "title": "Entender",
+      "description": "Analizo el problema, los usuarios y los objetivos del proyecto para definir prioridades reales."
+    },
+    "design": {
+      "title": "Diseñar",
+      "description": "Defino estructura, estilo y experiencia con criterio visual y foco en usabilidad."
+    },
+    "develop": {
+      "title": "Desarrollar",
+      "description": "Construyo componentes reutilizables, responsivos y mantenibles con buenas prácticas."
+    },
+    "optimize": {
+      "title": "Optimizar",
+      "description": "Reviso accesibilidad, rendimiento y detalles visuales antes de la entrega."
+    }
+  },
   "experience": {
     "title": "Experiencia",
+    "label": "Trayectoria",
+    "educationTitle": "Estudios",
+    "languagesTitle": "Idiomas",
     "items": [
       {
         "role": "Desarrollador Frontend",
@@ -51,7 +106,6 @@
     ]
   },
   "education": {
-    "title": "Estudios",
     "items": [
       {
         "name": "Tecnicatura en Desarrollo Web",
@@ -66,12 +120,10 @@
     ]
   },
   "languages": {
-    "title": "Idiomas",
     "spanish": "Español — Nativo",
     "english": "Inglés — Avanzado C2 (MCER)"
   },
-  "skills": {
-    "title": "Habilidades técnicas",
+  "skillsData": {
     "frontend": "Frontend",
     "frontendList": "HTML, CSS, SCSS, Tailwind, JavaScript, TypeScript, React, Next.js",
     "cms": "CMS y herramientas",
@@ -83,8 +135,22 @@
     "versionControl": "Control de versiones",
     "versionControlList": "GitHub"
   },
+  "services": {
+    "title": "Servicios",
+    "label": "Qué puedo hacer",
+    "description": "Soluciones frontend centradas en claridad, rendimiento y una experiencia que represente bien tu marca.",
+    "landingPages": "Landing pages",
+    "corporateSites": "Sitios corporativos",
+    "ecommerceFrontend": "Frontend para ecommerce",
+    "webApps": "Aplicaciones web",
+    "interfaceRedesign": "Rediseño de interfaces",
+    "frontendDevelopment": "Desarrollo frontend"
+  },
   "contact": {
     "title": "Contacto",
+    "label": "Hablemos",
+    "headline": "¿Tenés un proyecto, una oportunidad laboral o querés conversar sobre una idea?",
+    "description": "Estoy abierto a colaboraciones, nuevos desafíos y conversaciones sobre productos digitales bien construidos.",
     "labelPhone": "Teléfono",
     "labelEmail": "Correo",
     "labelLocation": "Ubicación",
@@ -93,14 +159,27 @@
     "phone": "+54 11 3889 9722",
     "email": "manuelrodriguezgarcia.wd@gmail.com",
     "location": "Barracas, CABA — Argentina",
-    "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "copyEmail": "Copiar correo",
+    "copied": "Copiado"
   },
-  "fabContactEmailLabel": "Correo",
-  "fabContactPhoneLabel": "Teléfono",
-  "fabContactCopy": "Copiar",
-  "fabContactCopied": "Copiado",
-  "fabContactAriaOpen": "Abrir datos de contacto",
-  "fabContactAriaClose": "Cerrar datos de contacto",
-  "fabContactAriaCopy": "Copiar {{field}}"
+  "footer": {
+    "backToTop": "Volver arriba",
+    "rights": "Todos los derechos reservados."
+  },
+  "settings": {
+    "open": "Abrir configuración",
+    "close": "Cerrar configuración",
+    "themeDark": "Cambiar a modo claro",
+    "themeLight": "Cambiar a modo oscuro",
+    "languageEs": "Cambiar a inglés",
+    "languageEn": "Cambiar a español"
+  },
+  "menu": {
+    "open": "Abrir menú",
+    "close": "Cerrar menú"
+  },
+  "a11y": {
+    "externalLink": "(se abre en una nueva pestaña)",
+    "decorativeIllustration": "Ilustración decorativa"
+  }
 }
