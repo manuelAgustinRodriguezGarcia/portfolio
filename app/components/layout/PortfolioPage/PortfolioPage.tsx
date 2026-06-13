@@ -1,7 +1,7 @@
 "use client";
 
-import Header from "@/app/components/layout/Header/Header";
 import Footer from "@/app/components/layout/Footer/Footer";
+import Header from "@/app/components/layout/Header/Header";
 import Hero from "@/app/components/sections/Hero/Hero";
 import Profile from "@/app/components/sections/Profile/Profile";
 import FeaturedProjects from "@/app/components/sections/FeaturedProjects/FeaturedProjects";
@@ -11,6 +11,7 @@ import WorkProcess from "@/app/components/sections/WorkProcess/WorkProcess";
 import ExperienceSection from "@/app/components/sections/Experience/ExperienceSection";
 import Services from "@/app/components/sections/Services/Services";
 import Contact from "@/app/components/sections/Contact/Contact";
+import FloatingSettings from "@/app/components/FloatingSettings";
 import { PRIMARY_NAV } from "@/app/data/navigation";
 import { useScrollSpy } from "@/app/hooks/useScrollSpy";
 
@@ -32,6 +33,7 @@ export default function PortfolioPage() {
       <Services />
       <Contact />
       <Footer />
+      <FloatingSettings placement="floating" />
     </>
   );
 }

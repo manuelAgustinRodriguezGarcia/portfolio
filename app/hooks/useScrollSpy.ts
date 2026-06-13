@@ -29,11 +29,7 @@ export function useScrollSpy(sectionIds: string[]) {
         }
       });
 
-      if (!bestId || bestId === "hero") {
-        setActiveId((current) => (current === null ? current : null));
-      } else {
-        setActiveId((current) => (current === bestId ? current : bestId));
-      }
+      setActiveId((current) => (current === bestId ? current : bestId));
     };
 
     let ticking = false;

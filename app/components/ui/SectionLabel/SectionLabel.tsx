@@ -5,11 +5,12 @@ import styles from "./SectionLabel.module.scss";
 
 interface SectionLabelProps {
   children: ReactNode;
+  className?: string;
 }
 
-export default function SectionLabel({ children }: SectionLabelProps) {
+export default function SectionLabel({ children, className }: SectionLabelProps) {
   return (
-    <span className={styles.label}>
+    <span className={`${styles.label} ${className ?? ""}`.trim()}>
       <span className={styles.dot} aria-hidden="true" />
       {children}
     </span>

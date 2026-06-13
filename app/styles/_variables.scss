@@ -6,8 +6,9 @@ $bp-xl: 1280px;
 $bp-2xl: 1440px;
 
 // Typography families (set via next/font CSS vars in layout)
-$font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-$font-body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+$font-heading: var(--font-heading);
+$font-body: var(--font-body);
+$font-display: $font-heading;
 $font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
 // Spacing scale
@@ -45,5 +46,6 @@ $z-modal: 300;
 
 // Layout
 $nav-height: 72px;
-$section-max: 1200px;
+$section-max: 1240px;
 $content-max: 1120px;
+$hero-shell-max: 1280px;

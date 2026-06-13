@@ -48,6 +48,44 @@ export const staggerFast: Variants = {
   },
 };
 
+export const fadeUpSubtle: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: easeOut },
+  },
+};
+
+export const heroNameLine: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: easeOut },
+  },
+};
+
+export const heroStagger: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.06,
+    },
+  },
+};
+
+export const heroNameStagger: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.12,
+    },
+  },
+};
+
 export const textReveal: Variants = {
   hidden: { opacity: 0, y: "110%" },
   visible: {
@@ -86,6 +124,36 @@ export const menuItem: Variants = {
 export const viewportOnce = {
   once: true,
   margin: "-80px" as const,
+};
+
+export const slideInFromRight: Variants = {
+  hidden: { opacity: 0, x: 56 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.48, ease: easeOut },
+  },
+};
+
+export const slideInFromLeft: Variants = {
+  hidden: { opacity: 0, x: -56 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.48, ease: easeOut },
+  },
+};
+
+export const profileBlockViewport = {
+  once: false as const,
+  amount: 0.45 as const,
+  margin: "-10% 0px -10% 0px" as const,
+};
+
+export const profileHeadlineViewport = {
+  once: false as const,
+  amount: 0.35 as const,
+  margin: "-10% 0px -10% 0px" as const,
 };
 
 export const hoverLift = {

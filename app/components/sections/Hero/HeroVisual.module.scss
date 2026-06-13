@@ -1,0 +1,82 @@
+@use "../../../styles/variables" as *;
+
+.visual {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  contain: strict;
+}
+
+.pillarSlot {
+  position: absolute;
+  inset: 0 0 0 40%;
+  opacity: 0.92;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 16%,
+    #000 36%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 16%,
+    #000 36%,
+    #000 100%
+  );
+}
+
+@media (max-width: 1023px) {
+  .pillarSlot {
+    inset: 0 0 0 36%;
+    opacity: 0.78;
+  }
+}
+
+@media (max-width: 767px) {
+  .pillarSlot {
+    inset: auto 0 0;
+    left: 0;
+    height: 55%;
+    opacity: 0.38;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 28%,
+      #000 62%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 28%,
+      #000 62%
+    );
+  }
+}
+
+:global(html[data-theme="light"]) {
+  .pillarSlot {
+    opacity: 0.92;
+  }
+
+  .pillarSlotLight {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 12%,
+      #000 30%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 12%,
+      #000 30%,
+      #000 100%
+    );
+  }
+}

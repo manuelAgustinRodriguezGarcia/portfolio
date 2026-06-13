@@ -1,45 +1,45 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import "./globals.scss";
 import I18nProvider from "@/app/components/I18nProvider";
 import ThemeInit from "@/app/components/layout/ThemeInit";
 import PersonSchema from "@/app/components/seo/PersonSchema";
 
-const display = Syne({
+const geist = Geist({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-display",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const body = DM_Sans({
+const inter = Inter({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-body",
+  variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Manuel Rodriguez Garcia | Frontend Developer",
+    default: "Manuel Rodriguez Garcia | Fullstack Developer",
     template: "%s | Manuel Rodriguez Garcia",
   },
   description:
-    "Portfolio de Manuel Rodriguez Garcia — Desarrollador Frontend. Interfaces modernas, React, TypeScript, Next.js.",
+    "Portfolio de Manuel Rodriguez Garcia — Desarrollador Fullstack. Interfaces modernas, React, TypeScript, Next.js.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Manuel Rodriguez Garcia | Frontend Developer",
+    title: "Manuel Rodriguez Garcia | Fullstack Developer",
     description:
-      "Portfolio de Manuel Rodriguez Garcia — Desarrollador Frontend. Interfaces modernas, React, TypeScript, Next.js.",
+      "Portfolio de Manuel Rodriguez Garcia — Desarrollador Fullstack. Interfaces modernas, React, TypeScript, Next.js.",
     type: "website",
     locale: "es_AR",
     alternateLocale: ["en_US"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Manuel Rodriguez Garcia | Frontend Developer",
+    title: "Manuel Rodriguez Garcia | Fullstack Developer",
     description:
-      "Portfolio de Manuel Rodriguez Garcia — Desarrollador Frontend. Interfaces modernas, React, TypeScript, Next.js.",
+      "Portfolio de Manuel Rodriguez Garcia — Desarrollador Fullstack. Interfaces modernas, React, TypeScript, Next.js.",
   },
 };
 
@@ -49,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${display.variable} ${body.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${geist.variable} ${inter.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{

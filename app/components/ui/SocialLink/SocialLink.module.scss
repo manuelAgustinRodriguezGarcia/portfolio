@@ -1,15 +1,18 @@
 @use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 .link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  gap: $space-2;
+  min-height: 44px;
+  padding: 0.55rem 1rem 0.55rem 0.85rem;
   border-radius: $radius-pill;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  border: 1px solid var(--color-border-soft);
+  background: rgba(29, 0, 51, 0.35);
+  color: var(--color-text-secondary);
+  font-family: $font-body;
   transition:
     background $duration-base $ease-out,
     border-color $duration-base $ease-out,
@@ -17,9 +20,34 @@
     color $duration-base $ease-out;
 
   &:hover {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
+    background: rgba(144, 50, 187, 0.16);
+    border-color: var(--color-violet-400);
+    color: var(--color-highlight);
+    transform: translateY(-1px);
+  }
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+:global(html[data-theme="light"]) {
+  .link {
+    background: rgba(255, 255, 255, 0.65);
+    color: var(--color-text-secondary);
+
+    &:hover {
+      background: rgba(241, 229, 245, 0.95);
+      color: var(--color-primary);
+    }
+  }
+}
+
+@include reduced-motion {
+  .link:hover {
+    transform: none;
   }
 }

@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import LanguageToggle from "@/app/components/LanguageToggle";
-import ThemeToggle from "@/app/components/ThemeToggle";
 import { PRIMARY_NAV } from "@/app/data/navigation";
 import { menuContainer, menuItem } from "@/app/lib/motion";
 import styles from "./MobileMenu.module.scss";
@@ -70,10 +68,6 @@ export default function MobileMenu({
                 );
               })}
             </ul>
-            <div className={styles.toggles}>
-              <LanguageToggle />
-              <ThemeToggle />
-            </div>
           </motion.nav>
         </>
       ) : null}

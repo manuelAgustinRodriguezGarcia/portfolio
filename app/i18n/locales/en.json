@@ -7,19 +7,18 @@
     "contact": "Contact"
   },
   "hero": {
-    "label": "Frontend Developer · Buenos Aires",
-    "greeting": "Hi, I'm",
-    "name": "Manuel Rodriguez Garcia",
-    "role": "Frontend Developer",
-    "valueProposition": "I build memorable web interfaces that combine clarity, performance, and visual craft to earn trust and turn visits into opportunities.",
-    "cta": "Learn more",
-    "ctaProjects": "View projects",
-    "ctaContact": "Contact"
+    "eyebrow": "Fullstack Developer",
+    "nameLines": ["Manuel", "Rodriguez", "Garcia"],
+    "description": "I create modern, memorable interfaces designed to turn a visit into an experience.",
+    "ctaPrimary": "View projects",
+    "ctaSecondary": "Contact",
+    "socialGithub": "My GitHub",
+    "socialLinkedin": "My LinkedIn"
   },
   "profile": {
     "title": "Profile",
-    "label": "About",
-    "headline": "<prim>A functional site is not enough.</prim> <grad>A memorable site, yes!</grad>",
+    "label": "The way I think",
+    "headline": "<prim>There are no second chances</prim> <grad>to make a great first impression.</grad>",
     "line1": "I help <accent>companies and founders</accent> earn trust online and turn visits into opportunities with clear, fast interfaces and obsessive attention to detail.",
     "line2": "A site that represents your brand changes how users perceive you: <accent>fewer doubts</accent>, <accent>more inquiries</accent>, and above all more <accent>trust built</accent> in the user.",
     "line5": "A page can be <accent>functional</accent> and still feel cold. I aim for <accent>memorable</accent> experiences where clear usability and visual craft work together, without giving up either.",
@@ -28,7 +27,7 @@
   "projects": {
     "title": "Featured projects",
     "label": "Projects",
-    "description": "A selection of work where frontend craft, experience design, and visual detail take center stage.",
+    "description": "A selection of work where fullstack craft, experience design, and visual detail take center stage.",
     "emptyTitle": "Projects in progress",
     "emptyDescription": "I'm preparing case studies to showcase here. In the meantime, feel free to explore my experience, skills, and contact options.",
     "emptyCta": "View experience",
@@ -44,9 +43,9 @@
     "description": "Tools and technologies I use to build modern, accessible, and maintainable interfaces."
   },
   "frontendLab": {
-    "title": "Frontend Lab",
+    "title": "Fullstack Lab",
     "label": "Experiments",
-    "description": "A space to explore animations, microinteractions, and visual components inspired by modern frontend references.",
+    "description": "A space to explore animations, microinteractions, and visual components inspired by modern fullstack references.",
     "comingSoon": "Coming soon",
     "slotLabel": "Experiment {{number}}",
     "slotDescription": "Reserved for an interactive demo."
@@ -79,7 +78,7 @@
     "languagesTitle": "Languages",
     "items": [
       {
-        "role": "Frontend Developer",
+        "role": "Fullstack Developer",
         "company": "Epirco Group",
         "period": "Sep 2025 - Present",
         "points": [
@@ -91,7 +90,7 @@
         ]
       },
       {
-        "role": "Freelance Frontend Developer",
+        "role": "Freelance Fullstack Developer",
         "company": "",
         "period": "Apr 2023 - Aug 2025",
         "points": [
@@ -113,7 +112,7 @@
         "period": "2025 - Present"
       },
       {
-        "name": "Front End Developer Course",
+        "name": "Fullstack Developer Course",
         "school": "Coderhouse",
         "period": "2023-2024"
       }
@@ -124,7 +123,7 @@
     "english": "English — Advanced C2 (CEFR)"
   },
   "skillsData": {
-    "frontend": "Frontend",
+    "frontend": "Fullstack",
     "frontendList": "HTML, CSS, SCSS, Tailwind, JavaScript, TypeScript, React, Next.js",
     "cms": "CMS & tools",
     "cmsList": "WordPress, Elementor, Shopify",
@@ -138,13 +137,13 @@
   "services": {
     "title": "Services",
     "label": "What I do",
-    "description": "Frontend solutions focused on clarity, performance, and an experience that represents your brand well.",
+    "description": "Fullstack solutions focused on clarity, performance, and an experience that represents your brand well.",
     "landingPages": "Landing pages",
     "corporateSites": "Corporate websites",
-    "ecommerceFrontend": "Ecommerce frontend",
+    "ecommerceFrontend": "Ecommerce fullstack",
     "webApps": "Web applications",
     "interfaceRedesign": "Interface redesign",
-    "frontendDevelopment": "Frontend development"
+    "frontendDevelopment": "Fullstack development"
   },
   "contact": {
     "title": "Contact",
@@ -169,8 +168,14 @@
   "settings": {
     "open": "Open settings",
     "close": "Close settings",
-    "themeDark": "Switch to light mode",
-    "themeLight": "Switch to dark mode",
+    "openMenu": "Open settings",
+    "closeMenu": "Close settings",
+    "language": "Language",
+    "theme": "Theme",
+    "langEs": "Español",
+    "langEn": "English",
+    "themeDark": "Dark mode",
+    "themeLight": "Light mode",
     "languageEs": "Switch to English",
     "languageEn": "Switch to Spanish"
   },

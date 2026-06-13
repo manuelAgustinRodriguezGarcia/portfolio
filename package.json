@@ -18,14 +18,17 @@
     "react-i18next": "^16.5.8",
     "react-tsparticles": "^2.12.2",
     "sass": "^1.98.0",
+    "three": "^0.184.0",
     "tsparticles": "^3.9.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.184.1",
     "eslint": "^9",
     "eslint-config-next": "^16.2.1",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531"
 }

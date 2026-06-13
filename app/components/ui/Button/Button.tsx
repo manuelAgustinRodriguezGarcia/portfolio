@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import styles from "./Button.module.scss";
 
@@ -14,6 +15,7 @@ interface ButtonProps {
   className?: string;
   onClick?: () => void;
   magnetic?: boolean;
+  withArrow?: boolean;
 }
 
 export default function Button({
@@ -24,6 +26,7 @@ export default function Button({
   className = "",
   onClick,
   magnetic = false,
+  withArrow = false,
 }: ButtonProps) {
   const classes = [styles.button, styles[variant], magnetic ? styles.magnetic : "", className]
     .filter(Boolean)
@@ -35,7 +38,8 @@ export default function Button({
       whileHover={magnetic ? { scale: 1.02 } : undefined}
       whileTap={magnetic ? { scale: 0.98 } : undefined}
     >
-      {children}
+      <span>{children}</span>
+      {withArrow ? <ArrowRight size={18} strokeWidth={2} aria-hidden="true" /> : null}
     </motion.span>
   );
 

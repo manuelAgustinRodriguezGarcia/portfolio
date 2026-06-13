@@ -3,76 +3,53 @@
 
 .header {
   position: fixed;
-  inset: 0 0 auto;
+  top: clamp(0.75rem, 2vw, 1rem);
+  left: 0;
+  right: 0;
   z-index: $z-nav;
-  height: $nav-height;
-  transition:
-    background $duration-base $ease-out,
-    border-color $duration-base $ease-out,
-    backdrop-filter $duration-base $ease-out;
-}
-
-.scrolled {
-  background: var(--nav-bg);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(16px);
-}
-
-.inner {
-  width: min(100%, $section-max);
-  height: 100%;
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 3vw, 2rem);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-4;
+  justify-content: center;
+  padding-inline: clamp(1rem, 3vw, 1.5rem);
+  pointer-events: none;
+  background: transparent;
+  isolation: isolate;
 }
 
-.logo {
+.pill {
   display: inline-flex;
   align-items: center;
-  gap: $space-3;
-  min-width: 0;
+  width: fit-content;
+  max-width: min(100%, calc(100vw - 2rem));
+  padding: 0.35rem 0.45rem 0.35rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: $radius-pill;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+  pointer-events: none;
+  transition:
+    opacity $duration-base $ease-out,
+    transform $duration-base $ease-out,
+    background $duration-base $ease-out,
+    border-color $duration-base $ease-out,
+    box-shadow $duration-base $ease-out;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--border);
-}
-
-.logoText {
-  display: grid;
-  min-width: 0;
-}
-
-.initials,
-.fullName {
-  font-family: $font-display;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.initials {
-  display: none;
-  font-size: 0.95rem;
-}
-
-.fullName {
-  font-size: 0.92rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 18ch;
+.pillVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  background: var(--nav-bg);
+  border-color: var(--color-border-soft);
+  box-shadow: var(--shadow-surface);
 }
 
 .desktopNav {
   display: none;
   align-items: center;
   gap: $space-1;
+  flex-shrink: 0;
 
   @include respond-to(lg) {
     display: flex;
@@ -84,17 +61,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0.45rem 0.95rem;
+  min-height: 38px;
+  padding: 0.4rem 0.85rem;
   border-radius: $radius-pill;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
+  font-family: $font-body;
   font-size: 0.875rem;
   font-weight: 600;
+  white-space: nowrap;
   transition: color $duration-base $ease-out;
 
   &:hover,
   &.active {
-    color: var(--text);
+    color: var(--color-text-primary);
   }
 }
 
@@ -102,8 +81,8 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--surface-strong);
-  border: 1px solid var(--border);
+  background: rgba(144, 50, 187, 0.12);
+  border: 1px solid rgba(175, 105, 205, 0.22);
   z-index: -1;
 }
 
@@ -115,62 +94,47 @@
 .controls {
   display: inline-flex;
   align-items: center;
-  gap: $space-2;
+  gap: $space-1;
+  flex-shrink: 0;
 }
 
-.settingsButton,
 .menuButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: $radius-pill;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  transition:
-    background $duration-base $ease-out,
-    border-color $duration-base $ease-out;
+  border: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  transition: background $duration-base $ease-out;
 
   &:hover {
-    background: var(--surface-hover);
-    border-color: var(--border-strong);
+    background: rgba(144, 50, 187, 0.12);
   }
-}
 
-.menuButton {
   @include respond-to(lg) {
     display: none;
   }
 }
 
-.settingsPanel {
-  position: fixed;
-  top: calc($nav-height + 0.75rem);
-  right: clamp(1rem, 3vw, 2rem);
-  z-index: $z-overlay;
-  display: grid;
-  gap: $space-3;
-  padding: $space-4;
-  border: 1px solid var(--border);
-  border-radius: $radius-lg;
-  background: var(--bg-elevated);
-  box-shadow: var(--shadow-soft);
-}
-
-@media (max-width: 767px) {
-  .fullName {
-    display: none;
-  }
-
-  .initials {
-    display: inline;
+:global(html[data-theme="light"]) {
+  .menuButton:hover {
+    background: rgba(98, 0, 150, 0.08);
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .fullName {
-    max-width: 14ch;
+@include reduced-motion {
+  .pill {
+    transform: none;
+    transition:
+      opacity $duration-base $ease-out,
+      background $duration-base $ease-out,
+      border-color $duration-base $ease-out;
+  }
+
+  .pillVisible {
+    transform: none;
   }
 }

@@ -3,88 +3,84 @@
 
 .hero {
   position: relative;
-  min-height: calc(100svh - $nav-height);
-  display: flex;
-  align-items: center;
-  padding: clamp(6rem, 10vw, 8rem) clamp(1.25rem, 4vw, 2.5rem) clamp(3rem, 6vw, 4rem);
+  min-height: 100svh;
   overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 78% 48%, rgba(98, 0, 150, 0.22), transparent 42%),
+    linear-gradient(135deg, #0a0a0e 0%, #0a0a0e 46%, #160026 100%);
+
+  @include hero-grain;
 }
 
-.inner {
-  position: relative;
-  z-index: 1;
-  width: min(100%, $section-max);
-  margin-inline: auto;
-  display: grid;
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: center;
+:global(html[data-theme="light"]) {
+  .hero {
+    background:
+      radial-gradient(circle at 78% 48%, rgba(196, 154, 216, 0.16), transparent 48%),
+      linear-gradient(135deg, #ffffff 0%, #f8f2fa 46%, #f1e5f5 100%);
+  }
 
-  @include respond-to(lg) {
-    grid-template-columns: 1.05fr 0.95fr;
+  .background {
+    background:
+      radial-gradient(circle at 82% 38%, rgba(196, 154, 216, 0.12), transparent 38%),
+      radial-gradient(circle at 68% 72%, rgba(236, 212, 242, 0.1), transparent 42%);
   }
 }
 
-.content {
-  display: grid;
-  gap: $space-5;
-  max-width: 640px;
+.background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 38%, rgba(121, 0, 172, 0.16), transparent 36%),
+    radial-gradient(circle at 68% 72%, rgba(98, 0, 150, 0.1), transparent 40%);
+  z-index: 0;
 }
 
-.label {
-  font-family: $font-mono;
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent-2);
-}
-
-.greeting {
-  font-size: clamp(1rem, 2vw, 1.125rem);
-  color: var(--text-muted);
-}
-
-.name {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 0.98;
-  @include text-gradient;
-}
-
-.role {
-  font-family: $font-display;
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  color: var(--text);
-}
-
-.value {
-  max-width: 52ch;
-  color: var(--text-muted);
-  font-size: clamp(1rem, 1.6vw, 1.125rem);
-}
-
-.actions {
+.body {
+  position: relative;
+  z-index: 2;
   display: flex;
-  flex-wrap: wrap;
-  gap: $space-3;
-}
-
-.socials {
-  display: flex;
-  gap: $space-3;
-}
-
-.visual {
-  justify-self: center;
+  align-items: center;
+  min-height: 100svh;
   width: 100%;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
 }
 
-@include respond-to(md) {
-  .actions {
-    gap: $space-4;
+.inner {
+  width: min(100%, $section-max);
+  margin-inline: auto;
+  padding-block: calc($nav-height + clamp(2rem, 5vw, 3.5rem)) clamp(2rem, 5vw, 3.5rem);
+}
+
+.contentColumn {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 46%);
+}
+
+@media (max-width: 1023px) {
+  .contentColumn {
+    width: min(100%, 52%);
   }
 }
 
 @media (max-width: 767px) {
-  .actions > :last-child {
+  .inner {
+    padding-block: calc($nav-height + 1.75rem) clamp(2rem, 8vw, 3rem);
+  }
+
+  .body {
+    align-items: flex-start;
+  }
+
+  .contentColumn {
     width: 100%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .contentColumn {
+    width: 45%;
   }
 }

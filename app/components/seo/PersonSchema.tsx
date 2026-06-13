@@ -8,7 +8,7 @@ export default function PersonSchema() {
         "@type": "Person",
         "@id": "#person",
         name: PERSON.name,
-        jobTitle: "Frontend Developer",
+        jobTitle: "Fullstack Developer",
         email: CONTACT.email,
         telephone: CONTACT.phone,
         address: {
@@ -26,7 +26,7 @@ export default function PersonSchema() {
         mainEntity: { "@id": "#person" },
         name: `${PERSON.name} — Portfolio`,
         description:
-          "Portfolio de Manuel Rodriguez Garcia — Desarrollador Frontend. Interfaces modernas, React, TypeScript, Next.js.",
+          "Portfolio de Manuel Rodriguez Garcia — Desarrollador Fullstack. Interfaces modernas, React, TypeScript, Next.js.",
       },
     ],
   };
